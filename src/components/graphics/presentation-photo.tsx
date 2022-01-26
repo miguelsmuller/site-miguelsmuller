@@ -1,7 +1,6 @@
 import React from 'react'
+import { State } from 'src/pages'
 import styled from 'styled-components'
-
-import ProfileImage from '../../../public/assets/profile.jpg'
 
 const Container = styled.div`
   position: relative;
@@ -12,6 +11,8 @@ const Container = styled.div`
 `
 
 export default function PresentationPhoto() {
+  const data: any = State()
+
   return (
     <Container>
       <svg
@@ -70,7 +71,7 @@ export default function PresentationPhoto() {
       </svg>
 
       <img
-        src={ProfileImage.src}
+        src={data.pageHome.overviewImage.url}
         className="classIMG"
         width="249.452"
         height="251.069"
@@ -86,7 +87,6 @@ export default function PresentationPhoto() {
             clip-path: url('#clip-POLIGONO');
             position: absolute;
             transform: translate(-287px, 39px);
-            background-color: red;
           }
           .Mask {
             transform: translate(0px, 10px) rotate(15deg);

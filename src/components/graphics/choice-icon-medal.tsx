@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ChoiceIcon1() {
+export default function ChoiceMedal() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

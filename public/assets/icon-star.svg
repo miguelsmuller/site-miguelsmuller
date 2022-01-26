@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65" height="65" viewBox="0 0 65 65">
+  <defs>
+    <clipPath id="clip-SPRK_default_preset_name_custom_1">
+      <rect width="65" height="65"/>
+    </clipPath>
+  </defs>
+  <g id="SPRK_default_preset_name_custom_1" data-name="SPRK_default_preset_name_custom – 1" clip-path="url(#clip-SPRK_default_preset_name_custom_1)">
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="65" height="65" fill="none"/>
+    <path id="star-solid" d="M34.783,1.053,30.877,8.972l-8.739,1.274a1.915,1.915,0,0,0-1.059,3.266L27.4,19.673l-1.5,8.7a1.913,1.913,0,0,0,2.775,2.016L36.5,26.282l7.818,4.109a1.914,1.914,0,0,0,2.775-2.016l-1.5-8.7,6.322-6.161a1.915,1.915,0,0,0-1.059-3.266L42.122,8.972,38.216,1.053a1.916,1.916,0,0,0-3.433,0Z" transform="translate(-3.5 17.013)" fill="#f1f1f1"/>
+  </g>
+</svg>

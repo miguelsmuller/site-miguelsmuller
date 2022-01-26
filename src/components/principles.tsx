@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import Title from './title'
 import GuidelinesContent, {
   GuidelinesType
-} from '../services/mocks/guidelines.items'
+} from '../services/mocks/principles.items'
+import { State } from 'src/pages'
 
 // Responsável pela organização seção
 const Container = styled.section`
@@ -12,12 +13,13 @@ const Container = styled.section`
   padding-bottom: ${7 * 8}px;
 
   @media (min-width: 1280px) {
-    padding-bottom: ${16 * 8}px
+    padding-bottom: ${16 * 8}px;
   }
 `
 const Row = styled.div`
+  padding-top: ${2 * 8}px;
+  padding-bottom: ${2 * 8}px;
   gap: ${4 * 8}px;
-  padding: ${4 * 8}px 0px;
 
   display: flex;
   flex-direction: row;
@@ -30,8 +32,9 @@ const Cell = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  text-align: justify;
 
-  &.minWidth{
+  &.minWidth {
     min-width: 335px;
   }
 `
@@ -41,11 +44,12 @@ const GridOfCells = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: ${3*8}px;
+  gap: ${3 * 8}px;
   width: 100%;
+  text-align: left;
 
-  .firstCollection{
-    gap: ${3*8}px;
+  .firstCollection {
+    gap: ${3 * 8}px;
     display: flex;
     min-width: 375px;
     flex-wrap: wrap;
@@ -61,18 +65,18 @@ const Card = styled.div`
   border-radius: 10px;
   background-color: ${props => props.theme.colors.lightGray};
   border: 1px solid ${props => props.theme.colors.gray};
-  padding: ${3*8}px ${2*8}px;
+  padding: ${3 * 8}px ${2 * 8}px;
   min-width: 375px;
 
-  h2{
+  h2 {
     font-size: 18px;
     font-weight: ${props => props.theme.weight.extraBold};
     padding-bottom: ${2 * 8}px;
   }
 `
 
-export default function Guidelines() {
-  const content: GuidelinesType = GuidelinesContent()
+export default function Principles() {
+  const data: any = State()
 
   return (
     <Container className="container">
@@ -80,25 +84,41 @@ export default function Guidelines() {
       <Row>
         <Cell>
           <GridOfCells>
-            <div className='firstCollection'>
+            <div className="firstCollection">
               <Card className="shadow">
                 <h2>Missão</h2>
-                {content.mission}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: data.pageHome.principlesMission
+                  }}
+                ></div>
               </Card>
+
               <Card className="shadow">
                 <h2>Visão</h2>
-                {content.vision}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: data.pageHome.principlesVision
+                  }}
+                ></div>
               </Card>
             </div>
 
             <Card className="shadow">
               <h2>Valores</h2>
-              {content.values}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: data.pageHome.principlesValues
+                }}
+              ></div>
             </Card>
           </GridOfCells>
         </Cell>
 
-        <Cell className="minWidth" dangerouslySetInnerHTML={{ __html: content.introduction }}></Cell>
+        <Cell
+          className="minWidth"
+          dangerouslySetInnerHTML={{ __html: data.pageHome.principlesText }}
+        ></Cell>
       </Row>
     </Container>
   )

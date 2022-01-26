@@ -1,20 +1,18 @@
+import React, { useEffect } from 'react'
 import type { AppProps } from 'next/app'
-import { ThemeProvider } from 'styled-components';
 
-import React from 'react'
+import { ThemeProvider } from 'styled-components'
 
-const TestContext = React.createContext('light');
-TestContext.displayName = 'MyDisplayName';
+import GlobalStyle from '../styles/global'
+import theme from '../styles/theme'
 
-import GlobalStyle from "../styles/global";
-import { lightTheme } from "../styles/theme";
+const TestContext = React.createContext('light')
+TestContext.displayName = 'MyDisplayName'
 
 function MyApp({ Component, pageProps }: AppProps) {
-
-
   return (
     <TestContext.Provider value="dark">
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={theme}>
         <Component {...pageProps} />
         <GlobalStyle />
       </ThemeProvider>

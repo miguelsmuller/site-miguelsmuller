@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function HeaderLogo() {
   return (
@@ -36,5 +36,5 @@ export default function HeaderLogo() {
         ></path>
       </g>
     </svg>
-  );
+  )
 }

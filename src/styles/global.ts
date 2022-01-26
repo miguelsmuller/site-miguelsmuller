@@ -53,27 +53,35 @@ export default createGlobalStyle`
     padding-right: ${3 * 8}px;
   }
 
+  // 640px BREAKPOINT
   @media (min-width: 640px) {
     .container {
       max-width: 640px;
     }
   }
+
+  // 768px BREAKPOINT
   @media (min-width: 768px) {
     .container {
       max-width: 768px;
     }
   }
 
+  // 1024px BREAKPOINT
   @media (min-width: 1024px) {
     .container {
       max-width: 1024px;
     }
   }
+
+  // 1280px BREAKPOINT
   @media (min-width: 1280px) {
     .container {
       max-width: 1280px;
     }
   }
+
+  // 1536px BREAKPOINT
   @media (min-width: 1536px) {
     .container {
       max-width: 1536px;

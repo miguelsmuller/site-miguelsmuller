@@ -8,9 +8,9 @@
     "plugin:react/recommended",
     "standard",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
-    "prettier/standard",
-    "prettier/react",
+    //"prettier/@typescript-eslint",
+    //"prettier/standard",
+    //"prettier/react",
     "plugin:jsx-a11y/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -22,9 +22,17 @@
     "sourceType": "module"
   },
   "ignorePatterns": ["node_modules", ".next", "/*.js"],
-  "plugins": ["react", "@typescript-eslint", "prettier", "jsx-a11y"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    //"prettier",
+    "jsx-a11y"
+  ],
   "rules": {
-    "prettier/prettier": "error",
+    //"prettier/prettier": "error",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-use-before-define": "off",
     "space-before-function-paren": "off",
     "react/prop-types": "off"
   }

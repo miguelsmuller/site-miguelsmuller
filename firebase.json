@@ -1,0 +1,42 @@
+{
+	"emulators": {
+		"functions": {
+			"port": 5001
+		},
+		"hosting": {
+			"port": 5000
+		},
+		"ui": {
+			"enabled": true
+		}
+	},
+  "hosting": [
+		{
+      "site": "miguelsmuller-dev",
+      "cleanUrls": true,
+			"public": "public/",
+			"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+			"rewrites": [
+				{
+					"source": "**",
+					"function": "nextjs-server"
+				}
+			]
+		}
+	],
+	"functions": {
+		"source": ".",
+		"ignore": [
+			"firebase.json",
+			"firebase-debug.log",
+			"**/.*",
+			"**/node_modules/**",
+			"components/**",
+			"helpers/**",
+			"pages/**",
+			"public/**",
+			"firestore.rules",
+			"readme.md"
+		]
+	}
+}

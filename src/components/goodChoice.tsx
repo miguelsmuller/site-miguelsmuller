@@ -4,10 +4,11 @@ import styled from 'styled-components'
 
 import Title from './title'
 
-import ChoiceIcon1 from './graphics/choice-icon1'
-import ChoiceIcon2 from './graphics/choice-icon2'
-import ChoiceIcon3 from './graphics/choice-icon3'
-import ChoiceIcon4 from './graphics/choice-icon4'
+import ChoiceMedal from './graphics/choice-icon-medal'
+import ChoiceFlask from './graphics/choice-icon-flask'
+import ChoiceTarget from './graphics/choice-icon-target'
+import ChoiceGraduationCap from './graphics/choice-icon-graduation-cap'
+import { State } from 'src/pages'
 
 // Responsável pela seção - Container - Row - Cel
 const Container = styled.section`
@@ -89,47 +90,30 @@ const GridItem = styled.div`
   }
 `
 
-export default function Arguments() {
+export default function GoodChoice() {
+  const data: any = State()
+
   return (
     <Container className="container">
       <Title text="Por que sou uma boa escolha?" />
       <Row>
         <Cell className="maxWidth">
-          <div className="Texto">
-            <h3>ESTAMOS PREPARADOS PARA TE AJUDAR!</h3>
-            <p>
-              O mercado online está em constante mudança. É uma preocupação da
-              DEVIM o treinamento de todos os nossos colaboradores para poder
-              oferecer a você o melhor da web.
-            </p>
-
-            <p>
-              Participamos de congressos, cursos e eventos que nos capacitam
-              sobre o mercado e suas tecnologias. Incentivamos nossos
-              profissionais a participarem de projetos open-source e se
-              dedicarem a atividades e projetos pessoais.
-            </p>
-          </div>
+          <div
+            className="Texto"
+            dangerouslySetInnerHTML={{ __html: data.pageHome.goodChoiceText }}
+          ></div>
         </Cell>
 
         <Cell>
           <Grid>
-            <GridItem>
-              <ChoiceIcon1 />
-              <span>Tecnologia de ponta</span>
-            </GridItem>
-            <GridItem>
-              <ChoiceIcon2 />
-              <span>Laboratório de idéias</span>
-            </GridItem>
-            <GridItem>
-              <ChoiceIcon3 />
-              <span>Foco na experiencia do usuário</span>
-            </GridItem>
-            <GridItem>
-              <ChoiceIcon4 />
-              <span>Capacitação e Inovação constante</span>
-            </GridItem>
+            {data.pageHome.goodChoiceItems.map((item: any, index: number) => {
+              return (
+                <GridItem key={index}>
+                  <ChoiceMedal />
+                  <span>{item}</span>
+                </GridItem>
+              )
+            })}
           </Grid>
         </Cell>
       </Row>

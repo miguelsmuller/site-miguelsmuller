@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 import Title from './title'
 import ServiceContent, { ServiceType } from '../services/mocks/services.items'
-import Image from 'next/image'
+import { State } from 'src/pages'
 
 const Container = styled.section`
   padding-top: ${6 * 8}px;
   padding-bottom: ${7 * 8}px;
 
   @media (min-width: 1280px) {
-    padding-bottom: ${16 * 8}px
+    padding-bottom: ${16 * 8}px;
   }
 `
 
@@ -30,6 +30,7 @@ const Cell = styled.div`
   flex-direction: column;
   flex: 1;
   min-width: 335px;
+  text-align: justify;
 `
 
 const ServicesList = styled.ul`
@@ -41,7 +42,7 @@ const ServicesList = styled.ul`
 const ServicesListItem = styled.li`
   display: flex;
   align-items: center;
-  padding: 0 ${1 * 8}px;
+  padding: 8px 32px 8px 8px;
   color: ${props => props.theme.colors.white};
   font-weight: ${props => props.theme.weight.bold};
 
@@ -60,21 +61,31 @@ const ServicesListItem = styled.li`
 `
 
 export default function Services() {
-  const content: ServiceType = ServiceContent()
+  const data: any = State()
 
   return (
     <Container className="container">
       <Title text="O que eu faço?" />
       <Row>
-        <Cell dangerouslySetInnerHTML={{ __html: content.introduction }} />
+        <Cell
+          dangerouslySetInnerHTML={{ __html: data.pageHome.servicesText }}
+        />
 
         <Cell>
           <ServicesList>
-            {content.services.map((item: any, index: number) => {
+            {data.pageHome.servicesListItems.map((item: any, index: number) => {
               return (
-                <ServicesListItem className={'service-' + index}>
-                  <Image src={'/assets/' + item.icon} width="65" height="65" />
-                  {item.label}
+                <ServicesListItem
+                  key={'service-' + index}
+                  className={'service-' + index}
+                >
+                  <img
+                    alt=""
+                    src={'/assets/icon-star.svg'}
+                    width="65"
+                    height="65"
+                  />
+                  {item}
                 </ServicesListItem>
               )
             })}

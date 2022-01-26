@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import styled from 'styled-components'
+import { State } from '../../pages/index'
 
 const FooterContainer = styled.div`
   padding-top: ${6 * 8}px;
@@ -126,7 +127,7 @@ const Navigation = styled.ul`
 const Contacts = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: ${4 * 8}px;
   grid-row-gap: ${2 * 8}px;
@@ -144,60 +145,96 @@ const Contacts = styled.div`
 `
 
 export default function FooterFirst() {
+  const data: any = State()
+
   return (
     <FooterContainer>
       <FooterInner className="container">
         <div className="footerSocial">
           <Social>
-            <div className="icon1">
-              <Image src={'/assets/icon-linkedin.svg'} width="62" height="62" />
-            </div>
+            <a
+              href={data.pageHome.personalUrlLinkedin}
+              className="icon1"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                alt=""
+                src={'/assets/icon-linkedin.svg'}
+                width="62"
+                height="62"
+              />
+            </a>
 
-            <div className="icon2">
-              <Image src={'/assets/GitHub.svg'} width="62" height="62" />
-            </div>
+            <a
+              href={data.pageHome.personalUrlGithub}
+              className="icon2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                alt=""
+                src={'/assets/icon-github.svg'}
+                width="62"
+                height="62"
+              />
+            </a>
 
             <div className="logo">
-              <Image
+              <img
+                alt=""
                 src={'/assets/icon-logo.svg'}
                 width="137.1"
                 height="38.83"
               />
             </div>
 
-            <div className="icon3">
-              <Image src={'/assets/Twitter.svg'} width="62" height="62" />
-            </div>
+            <a
+              href={data.pageHome.personalUrlTwitter}
+              className="icon3"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                alt=""
+                src={'/assets/icon-twitter.svg'}
+                width="62"
+                height="62"
+              />
+            </a>
 
-            <div className="icon4">
-              <Image
+            <a
+              href={data.pageHome.personalUrlInstagram}
+              className="icon4"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                alt=""
                 src={'/assets/icon-instagram.svg'}
                 width="62"
                 height="62"
               />
-            </div>
+            </a>
           </Social>
         </div>
 
         <div className="footerNavigation">
           <Navigation>
             <li>
-              <a href="#">Home</a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a href="#">Agência</a>
+              <a href={data.pageHome.personalUrlGithub}>GitHub</a>
             </li>
             <li>
-              <a href="#">Serviços</a>
+              <a href={data.pageHome.personalUrlLinkedin}>Linkedin</a>
             </li>
             <li>
-              <a href="#">Blog</a>
+              <a href={data.pageHome.personalUrlCurriculo}>Currículo</a>
             </li>
             <li>
-              <a href="#">Fale Conosco</a>
-            </li>
-            <li>
-              <a href="#">Mapa do Site</a>
+              <a href="/">Mapa do Site</a>
             </li>
           </Navigation>
         </div>
@@ -206,7 +243,8 @@ export default function FooterFirst() {
           <Contacts>
             <div className="contact-item">
               <span>
-                <Image
+                <img
+                  alt=""
                   src={'/assets/icon-localizacao.svg'}
                   width="42"
                   height="55.36"
@@ -220,21 +258,8 @@ export default function FooterFirst() {
 
             <div className="contact-item">
               <span>
-                <Image
-                  src={'/assets/icon-telefone.svg'}
-                  width="42"
-                  height="42"
-                />
-              </span>
-              <div>
-                <p>(00)00000-0000</p>
-                <p>(00)00000-0000</p>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <span>
-                <Image
+                <img
+                  alt=""
                   src={'/assets/icon-email.svg'}
                   width="42"
                   height="41.5"
@@ -243,20 +268,6 @@ export default function FooterFirst() {
               <div>
                 <p>falecom@smuller.dev.br</p>
                 <p>atendimento@smuller.dev.br</p>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <span>
-                <Image
-                  src={'/assets/icon-horario.svg'}
-                  width="42"
-                  height="42"
-                />
-              </span>
-              <div>
-                <p>Atendimento comercial</p>
-                <p>de segunda à sexta das 9h às 18h</p>
               </div>
             </div>
           </Contacts>

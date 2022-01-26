@@ -9,25 +9,23 @@ export interface ServiceType {
 export default function ServiceContent() {
   const content: ServiceType = {
     introduction:
-      '<p>A <strong>DEVIM</strong> oferece a você soluções digitais. <span className="color-red">Pensamos</span>, <span className="color-red">planejamos</span> e <span className="color-red">desenvolvemos</span> o potencial da sua empresa na internet, para que você possa focar na administração física do seu negócio.</p>\
-    <p>Utilizando as mais modernas ferramentas web, em sintonia com a necessidade da sua empresa, construímos uma imagem digital de forma inteligente e eficiente.Colocamos a ideia que você traz do empreendimento em prática, construindo um produto de verdadeira personalidade.</p>\
-    <p>Somos uma agência digital com portfólio variado: atuamos em ações específicas e também oferecemos assessoria digital. Queremos te ajudar a conseguir resultados. Você cria coisas incríveis quando escolhe uma equipe completa!</p>',
+      '<p>Sou <strong>Desenvolvedor Full-Stack</strong>, ou seja, sou o profissional programador que transita entre <em>desenvolvimento back-end</em> e <em>desenvolvimento front-end</em>, possuindo habilidades em Análise, Modelagem, Arquitetura, compreendendo assim todo o ciclo da <em>Cultura Dev-Ops</em>.</p><p>Possuo conhecimento em tecnologias como Javascript & Node, Python e PHP além de familiaridade em outras linguagens de programação do mercado, bem como conhecimento em Banco de Dados, Estrutura de Dados e Engenharia e Arquitetura de software.</p><p>Meu objetivo é colaborar com times ágeis e multidisciplinares no projeto, codificação e manutenção de aplicações consistentes e escaláveis através de códigos cada vez melhores, contribuindo para atender rigorosos padrões de qualidade.</p>',
 
     services: [
       {
-        label: 'Consultoria e Planejamento Estratégico',
+        label: 'Programação nas principais linguagens do mercado',
         icon: 'IconConsultancy.svg'
       },
       {
-        label: 'Criação de Sites, Lojas Virtuais e Apps Mobile',
+        label: 'Engenharia de Software e Análise de Sistemas',
         icon: 'IconCriation.svg'
       },
       {
-        label: 'Facebook Ads, Google AdWord e E-Mail Marketing',
+        label: 'Banco de Dados SQL e NO-SQL',
         icon: 'IconMarketing.svg'
       },
       {
-        label: 'SEO - Otimização de resultados no Google',
+        label: 'Infraestrutura, Virtualização e Versionamento',
         icon: 'IconOptimization.svg'
       }
     ]

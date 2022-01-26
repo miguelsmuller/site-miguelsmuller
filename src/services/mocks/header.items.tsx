@@ -1,6 +1,7 @@
 export interface HeaderType {
   logo: string
   itens: Array<{
+    target: string
     href: string
     text: string
   }>
@@ -11,24 +12,29 @@ export default function HeaderContent() {
     logo: '',
     itens: [
       {
-        href: '#',
-        text: 'Inicio'
-      },
-      {
+        target: '_self',
         href: '#',
         text: 'Apresentação'
       },
       {
+        target: '_self',
         href: '#',
         text: 'Serviços'
       },
       {
-        href: '#',
-        text: 'Portifólio'
+        target: '_blank',
+        href: 'https://github.com/miguelsmuller',
+        text: 'Github'
       },
       {
-        href: '#',
-        text: 'Artigos'
+        target: '_blank',
+        href: 'https://www.linkedin.com/in/miguelsmuller/',
+        text: 'Linkedin'
+      },
+      {
+        target: '_blank',
+        href: 'https://1drv.ms/b/s!AgCzmShiilsriJ0RcqWjuqzF0Pxo4A?e=fkn4XY',
+        text: 'Meu Currículo'
       }
     ]
   }

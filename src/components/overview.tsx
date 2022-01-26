@@ -3,18 +3,15 @@ import styled from 'styled-components'
 
 import Title from './title'
 
-import PresentationContent, {
-  PresentationType
-} from '../services/mocks/presentation.items'
-
 import PresentationPhoto from './graphics/presentation-photo'
+import { State } from 'src/pages'
 
 const Container = styled.section`
   padding-top: ${14 * 8}px;
   padding-bottom: ${7 * 8}px;
 
   @media (min-width: 1280px) {
-    padding-bottom: ${16 * 8}px
+    padding-bottom: ${16 * 8}px;
   }
 `
 
@@ -25,6 +22,7 @@ const Row = styled.div`
   align-items: center;
   width: 100%;
   justify-content: center;
+  padding: 32px 0px;
 `
 
 const WrapPhoto = styled.div`
@@ -34,7 +32,8 @@ const WrapPhoto = styled.div`
 `
 
 const WrapText = styled.div`
-  flex: 1;
+  text-align: justify;
+  flex: 1 1 100%;
   position: relative;
   min-width: 335px;
 
@@ -44,13 +43,17 @@ const WrapText = styled.div`
     width: 500px;
     height: 320px;
     position: absolute;
-    right: -260px;
-    bottom: -120px;
+    right: -210px;
+    bottom: -130px;
     z-index: -1;
   }
 
+  @media (min-width: 1024px) {
+    flex: 1 1 0%;
+  }
+
   @media (min-width: 1280px) {
-    margin: 0px ${40 * 8}px 0px ${8 * 8}px;
+    margin: 0px ${24 * 8}px 0px ${3 * 8}px;
 
     &:after {
       display: block;
@@ -60,8 +63,8 @@ const WrapText = styled.div`
   }
 `
 
-export default function Presentation() {
-  const content: PresentationType = PresentationContent()
+export default function Overview() {
+  const data: any = State()
 
   return (
     <Container className="container">
@@ -71,7 +74,9 @@ export default function Presentation() {
           <PresentationPhoto />
         </WrapPhoto>
 
-        <WrapText dangerouslySetInnerHTML={{ __html: content.text }} />
+        <WrapText
+          dangerouslySetInnerHTML={{ __html: data.pageHome.overviewText }}
+        />
       </Row>
     </Container>
   )

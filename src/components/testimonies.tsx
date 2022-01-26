@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { State } from 'src/pages'
 import styled from 'styled-components'
 
 import Title from './title'
@@ -82,34 +83,26 @@ const Testimony = styled.div`
   }
 `
 
-export default function Testimonials() {
+export default function Testimonies() {
+  const data: any = State()
+
   return (
     <Container className="container">
       <Title text="O que falam de mim" />
       <TestimonialsCarousel>
-        <Testimony>
-          <div className="testimony-author">
-            <h2>Alexandre Volney Rizzi</h2>
-            <p>
-              Presidente - Gestão 2012-2013
-              <br />
-              SCODB
-            </p>
-          </div>
-          <div className="testimony-content">
-            <p>
-              Desenvolver o portal com a Devim foi muito fácil e muito
-              tranquilo. Desde o primeiro contato, passando pelo orçamento e
-              pela aprovação de layout, sempre estiveram à disposição para sanar
-              dúvidas e oferecer soluções que se aplicavam ao que estávamos
-              buscando. E mesmo após o portal ter sido oficialmente lançado,
-              continuaram acompanhando a utilização do mesmo e oferecendo novas
-              ferramentas que melhoraram a acessibilidade e a integração com os
-              usuários. Estou muito satisfeito com a atenção que recebemos e com
-              certeza iremos desenvolver novos trabalhos juntos.
-            </p>
-          </div>
-        </Testimony>
+        {data.testimonies.map((item: any, index: number) => {
+          return (
+            <Testimony key={index}>
+              <div className="testimony-author">
+                <h2>{item.author}</h2>
+                <div dangerouslySetInnerHTML={{ __html: item.company }}></div>
+              </div>
+              <div className="testimony-content">
+                <div dangerouslySetInnerHTML={{ __html: item.text }} />
+              </div>
+            </Testimony>
+          )
+        })}
       </TestimonialsCarousel>
     </Container>
   )

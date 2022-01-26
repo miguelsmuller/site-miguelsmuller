@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function HeroLogo() {
   return (
@@ -34,5 +34,5 @@ export default function HeroLogo() {
         transform="translate(-51.132 -146.496)"
       ></path>
     </svg>
-  );
+  )
 }
