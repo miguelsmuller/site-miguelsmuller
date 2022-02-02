@@ -11,11 +11,8 @@ export default function Study() {
 
   const renderStudyItem = (item: any, _index: number) => {
     return (
-      <Fragment>
-        <dl
-          key={slugify(item.title)}
-          className={slugify(item.title, { lower: true })}
-        >
+      <Fragment key={slugify(item.title)}>
+        <dl className={slugify(item.title, { lower: true })}>
           <dt>{item.title}</dt>
           <dd>{item.local}</dd>
         </dl>
