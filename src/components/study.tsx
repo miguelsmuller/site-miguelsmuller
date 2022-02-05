@@ -1,13 +1,38 @@
 import React, { Fragment } from 'react'
+import Modal from 'react-modal'
 
 import slugify from 'slugify'
 
 import Title from './title'
 import theme from 'src/styles/theme'
 import { State } from 'src/pages'
+import StudyModal from './study-modal/study-modal'
+
+Modal.setAppElement('#__next')
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 200
+  }
+}
 
 export default function Study() {
   const data: any = State()
+
+  const [modalIsOpen, setIsOpen] = React.useState(false)
+
+  function handleOpenModal() {
+    setIsOpen(true)
+  }
+  function handleCloseModal() {
+    setIsOpen(false)
+  }
 
   const renderStudyItem = (item: any, _index: number) => {
     return (
@@ -55,7 +80,9 @@ export default function Study() {
               {data.Certification?.map(renderStudyItem)}
             </div>
             <div className="cell-footer">
-              <a href="/">Ver todas as certificações »</a>
+              <button onClick={handleOpenModal}>
+                Ver todas as certificações »
+              </button>
             </div>
           </div>
 
@@ -65,12 +92,28 @@ export default function Study() {
               {data.Course?.map(renderStudyItem)}
             </div>
             <div className="cell-footer">
-              <a href="/">Ver todos os cursos »</a>
+              <button onClick={handleOpenModal}>Ver todos os cursos »</button>
             </div>
           </div>
         </div>
+
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={handleCloseModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <StudyModal></StudyModal>
+        </Modal>
       </div>
       <style jsx>{`
+        .modal-content {
+        }
+
+        .modal-overlay {
+          z-index: 110;
+        }
+
         .root {
           padding-top: ${6 * 8}px;
           padding-bottom: ${7 * 8}px;
@@ -115,10 +158,16 @@ export default function Study() {
           padding-top: ${2 * 8}px;
           font-size: 14px;
         }
+        .cell-footer > button,
         .cell-footer > a {
           color: ${theme.colors.red};
           text-decoration: none;
+          font-weight: ${theme.weight.semiBold};
+          border: none;
+          cursor: pointer;
+          font-size: 14px;
         }
+        .cell-footer > button:hover,
         .cell-footer > a:hover {
           text-decoration: underline;
         }
