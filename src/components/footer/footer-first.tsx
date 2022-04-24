@@ -266,8 +266,7 @@ export default function FooterFirst() {
                 />
               </span>
               <div>
-                <p>falecom@smuller.dev.br</p>
-                <p>atendimento@smuller.dev.br</p>
+                {data.pageHome.footerMail}
               </div>
             </div>
           </Contacts>
