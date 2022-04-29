@@ -70,7 +70,7 @@ export default function Study() {
               {data.Academic?.map(renderStudyItem)}
             </div>
             <div className="cell-footer">
-              <a href="/">Ver o Lattes »</a>
+              <a href={data.pageHome.personalUrlLattes} target="_blank" rel="noreferrer">Ver o Lattes »</a>
             </div>
           </div>
 
