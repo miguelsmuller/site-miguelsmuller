@@ -1,14 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
+import jsonData from '../../settings/graphcms.json'
+
 const functions = require('firebase-functions')
 
-const env = functions.config().graphcms
+const graphcmsConfig = functions.config().graphcms || jsonData
 
 async function fetchAPI(query: any) {
-  const res = await fetch(env.url, {
+  const res = await fetch(graphcmsConfig.url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${env.key}`
+      Authorization: `Bearer ${graphcmsConfig.key}`
     },
     body: JSON.stringify({
       query
