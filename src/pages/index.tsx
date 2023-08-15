@@ -5,13 +5,10 @@ import { GetServerSideProps } from 'next'
 import { getAllContentForHome } from '../services/lib/graphcms'
 
 import Header from '../components/header/header'
-import Hero from '../components/header/hero'
 import Overview from '../components/overview'
 import Study from '../components/study'
 import Services from '../components/services'
-import Principles from '../components/principles'
 import Portifolio from '../components/portifolio'
-import GoodChoice from '../components/goodChoice'
 import Testimonies from '../components/testimonies'
 import Footer from '../components/footer/footer'
 
@@ -34,9 +31,7 @@ export default function Home(props: any) {
       <Overview />
       <Services />
       <Study />
-      <Principles />
       <Portifolio />
-      <GoodChoice />
       <Testimonies />
       <Footer />
     </DataFromCMS.Provider>
