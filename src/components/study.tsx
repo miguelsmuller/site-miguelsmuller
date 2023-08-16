@@ -27,7 +27,7 @@ export default function Study() {
         }
 
         .root {
-          padding-top: ${6 * 8}px;
+          padding-top: ${12 * 8}px;
           padding-bottom: ${7 * 8}px;
         }
 
