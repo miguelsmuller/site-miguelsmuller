@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import jsonData from '../../settings/graphcms.json'
+
+let jsonData = null
+
+if (process.env.NODE_ENV === 'development') {
+  jsonData = require('../../settings/graphcms.json')
+}
 
 const functions = require('firebase-functions')
 
