@@ -29,7 +29,6 @@ export default function Home(props: any) {
 
       <Header refHero={refHero} />
       <Overview />
-      <Services />
       <Study />
       <Portifolio />
       <Testimonies />
