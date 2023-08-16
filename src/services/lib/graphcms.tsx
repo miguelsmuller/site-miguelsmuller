@@ -1,14 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
+import jsonData from '../../settings/graphcms.json'
+
 const functions = require('firebase-functions')
 
-const env = functions.config().graphcms
+const graphcmsConfig = functions.config().graphcms || jsonData
 
 async function fetchAPI(query: any) {
-  const res = await fetch(env.url, {
+  const res = await fetch(graphcmsConfig.url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${env.key}`
+      Authorization: `Bearer ${graphcmsConfig.key}`
     },
     body: JSON.stringify({
       query
@@ -37,7 +39,11 @@ export async function getAllContentForHome() {
         personalUrlTwitter
         personalUrlInstagram
         personalUrlLattes
-        personalUrlCurriculo
+        personalUrlCurriculo {
+          id
+          url
+          fileName
+        }
         overviewImage {
           url
           fileName
@@ -72,17 +78,14 @@ export async function getAllContentForHome() {
           size
         }
       }
-      Academic: studies(first: 3, orderBy: completionDate_DESC, where: {studyType: Academic}) {
+      Study: studies( orderBy: completionDate_DESC) {
         title
         local
-      }
-      Certification: studies(first: 3, orderBy: completionDate_DESC, where: {studyType: Certification}) {
-        title
-        local
-      }
-      Course: studies(first: 3, orderBy: completionDate_DESC, where: {studyType: Course}) {
-        title
-        local
+        completionDate
+        certificateURl
+        studyType
+        hours
+        theme
       }
       testimonies(last: 3) {
         author

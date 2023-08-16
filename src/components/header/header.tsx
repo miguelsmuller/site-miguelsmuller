@@ -25,7 +25,10 @@ export default function Header(refHero: any) {
   }
 
   useEffect(() => {
-    const heroHeight = refHero.refHero.current.clientHeight
+    let heroHeight = 0
+    if (refHero.current) {
+      heroHeight = refHero.refHero.current.clientHeight
+    }
 
     const scrollSpy$ = fromEvent(window, 'scroll').pipe(
       throttleTime(10),

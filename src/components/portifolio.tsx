@@ -3,10 +3,6 @@ import React, { Fragment } from 'react'
 import { State } from 'src/pages'
 import styled from 'styled-components'
 
-import PortifolioContent, {
-  PortifolioType
-} from '../services/mocks/portifolio.items'
-
 import Title from './title'
 
 const BottomShadow = styled.section`

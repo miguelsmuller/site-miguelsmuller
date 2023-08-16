@@ -32,7 +32,7 @@ export default function Navigation() {
         <li>
           <a
             target="_blank"
-            href={data?.pageHome.personalUrlCurriculo}
+            href={data?.pageHome.personalUrlCurriculo.url}
             rel="noreferrer"
           >
             Meu Currículo

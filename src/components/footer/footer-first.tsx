@@ -251,8 +251,8 @@ export default function FooterFirst() {
                 />
               </span>
               <div>
-                <p>Rua Prefeito Mozart Cesar Valle, 271</p>
-                <p>Centro - Rio Claro - RJ - CEP: 27.460-000</p>
+                <p>Do: interior do Rio de Janeiro</p>
+                <p>Para: qualquer canto do mundo</p>
               </div>
             </div>
 
@@ -266,8 +266,7 @@ export default function FooterFirst() {
                 />
               </span>
               <div>
-                <p>falecom@smuller.dev.br</p>
-                <p>atendimento@smuller.dev.br</p>
+                {data.pageHome.footerMail}
               </div>
             </div>
           </Contacts>
