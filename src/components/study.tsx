@@ -1,111 +1,23 @@
 import React, { Fragment } from 'react'
-import Modal from 'react-modal'
 
-import slugify from 'slugify'
-
-import Title from './title'
 import theme from 'src/styles/theme'
 import { State } from 'src/pages'
-import StudyModal from './study-modal/study-modal'
 
-Modal.setAppElement('#__next')
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    zIndex: 200
-  }
-}
+import Title from './title'
+import Timeline from './study-timeline/Timeline'
 
 export default function Study() {
   const data: any = State()
-
-  const [modalIsOpen, setIsOpen] = React.useState(false)
-
-  function handleOpenModal() {
-    setIsOpen(true)
-  }
-  function handleCloseModal() {
-    setIsOpen(false)
-  }
-
-  const renderStudyItem = (item: any, _index: number) => {
-    return (
-      <Fragment key={slugify(item.title)}>
-        <dl className={slugify(item.title, { lower: true })}>
-          <dt>{item.title}</dt>
-          <dd>{item.local}</dd>
-        </dl>
-        <style jsx>{`
-          dl {
-            padding-bottom: ${3 * 8}px;
-          }
-
-          dt {
-            font-weight: ${theme.weight.bold};
-          }
-
-          dd {
-            font-weight: ${theme.weight.semiBold};
-            font-size: 14px;
-          }
-        `}</style>
-      </Fragment>
-    )
-  }
 
   return (
     <Fragment>
       <div className="root container">
         <Title text="O que eu já estudei?" />
         <div className="row">
-          <div className="cell">
-            <h2 className="cell-title">Acadêmica</h2>
-            <div className="cell-content">
-              {data.Academic?.map(renderStudyItem)}
-            </div>
-            <div className="cell-footer">
-              <a href={data.pageHome.personalUrlLattes} target="_blank" rel="noreferrer">Ver o Lattes »</a>
-            </div>
-          </div>
-
-          <div className="cell">
-            <h2 className="cell-title">Certificações</h2>
-            <div className="cell-content">
-              {data.Certification?.map(renderStudyItem)}
-            </div>
-            <div className="cell-footer">
-              <button onClick={handleOpenModal}>
-                Ver todas as certificações »
-              </button>
-            </div>
-          </div>
-
-          <div className="cell">
-            <h2 className="cell-title">Cursos</h2>
-            <div className="cell-content">
-              {data.Course?.map(renderStudyItem)}
-            </div>
-            <div className="cell-footer">
-              <button onClick={handleOpenModal}>Ver todos os cursos »</button>
-            </div>
-          </div>
+          <Timeline data={data.Study} />
         </div>
-
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={handleCloseModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <StudyModal></StudyModal>
-        </Modal>
       </div>
+
       <style jsx>{`
         .modal-content {
         }

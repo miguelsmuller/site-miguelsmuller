@@ -74,17 +74,14 @@ export async function getAllContentForHome() {
           size
         }
       }
-      Academic: studies(first: 3, orderBy: completionDate_DESC, where: {studyType: Academic}) {
+      Study: studies( orderBy: completionDate_DESC) {
         title
         local
-      }
-      Certification: studies(first: 3, orderBy: completionDate_DESC, where: {studyType: Certification}) {
-        title
-        local
-      }
-      Course: studies(first: 3, orderBy: completionDate_DESC, where: {studyType: Course}) {
-        title
-        local
+        completionDate
+        certificateURl
+        studyType
+        hours
+        theme
       }
       testimonies(last: 3) {
         author
