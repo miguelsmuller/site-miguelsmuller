@@ -161,7 +161,6 @@ const Timeline = ({ data }: any) => {
   }
 
   const renderDate = (item: any) => {
-    console.log(item)
     const currentDate = new Date(item.completionDate)
     const formattedDate = currentDate.toLocaleDateString('pt-BR')
 
