@@ -39,7 +39,11 @@ export async function getAllContentForHome() {
         personalUrlTwitter
         personalUrlInstagram
         personalUrlLattes
-        personalUrlCurriculo
+        personalUrlCurriculo {
+          id
+          url
+          fileName
+        }
         overviewImage {
           url
           fileName
