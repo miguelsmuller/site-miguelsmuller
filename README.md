@@ -27,6 +27,13 @@ O projeto ainda não está completo. E nunca vai estar. Assim como é a minha vi
 
 <br/>
 
+## 	:file_cabinet: **Gerencimento de Conteúdo**
+O projeto utiliza o Hygraph como a ferramenta principal para o gerenciamento de conteúdo. O Hygraph é uma poderosa plataforma de gerenciamento de conteúdo que oferece uma variedade de recursos e funcionalidades para facilitar a criação, organização e publicação de conteúdo de maneira eficiente e intuitiva.
+
+**[Admin Content - Hygraph](https://app.hygraph.com/)**
+
+<br/>
+
 ## 	:link: **Ambientes**
 Vou manter disponível esse projeto construído e 2 ambientes. O ambiente de produção possui o site estável e o ambiente de desenvolvimento possui novas features que estão sendo testadas.
 
@@ -60,7 +67,7 @@ Execute o **Ambiente de Desenvolvimento** com o script NPM:
 
 <br/>
 
-## :infinity: **Workflow**
+## :gear: **Workflow**
 **[WORKFLOW.md](WORKFLOW.md)** - This project uses the workflow pattern called `git flow`.
 - [Atlassian - Comparing Workflows](https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow)
 - [Difference between workflows](https://www.zup.com.br/blog/git-workflow)
