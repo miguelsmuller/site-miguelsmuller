@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import React, { Fragment } from 'react'
 import { State } from 'src/pages'
 import styled from 'styled-components'
@@ -67,9 +66,9 @@ export default function Portifolio() {
     return (
       <Fragment key={`item-${index}`}>
         <li>
-          <Link href="">
+          <a target="_blank" href={item?.projectUrl || '#'} rel="noreferrer">
             <img src={item?.image?.url} alt="" />
-          </Link>
+          </a>
         </li>
       </Fragment>
     )
