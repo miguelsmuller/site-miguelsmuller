@@ -31,15 +31,15 @@
   },
 
   "files.exclude": {
-    "**/e2e": true,
-    "**/design": true,
-    "**/node_modules": true,
-    "**/.vscode": false,
-    "**/dist": false,
-    "**/www": false,
-    "**/.github": false,
-    ".firebase": false,
     "package-lock.json": true,
+    "**/node_modules": true,
+    "**/design": true,
+    "**/e2e": true,
+    ".firebase": false,
+    "**/www": false,
+    "**/dist": false,
+    "**/.vscode": false,
+    "**/.github": false,
     "**/.next": false
   },
 }

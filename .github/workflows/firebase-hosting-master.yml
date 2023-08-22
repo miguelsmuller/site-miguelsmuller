@@ -1,0 +1,35 @@
+name: Deploy to Live
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci && npm run build
+
+      - name: Set environment variables
+        run: |
+          sudo apt-get install tree --yes
+          echo '${{ secrets.HYGRAPH_API }}' > ./settings/graphcms.json
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > $HOME/gcloud.json
+          ls -la
+          tree -L 2
+          cat ./settings/graphcms.json
+
+      - name: Deploy to Live
+        run: |
+          npx firebase-tools experiments:enable webframeworks
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools deploy --only functions,hosting -m "Deploying ${{ github.sha }}" --force
