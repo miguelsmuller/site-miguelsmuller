@@ -3,10 +3,9 @@ name: firebase-deploy
 on:
   push:
     branches:
-      - develop
-      - feature/**
-      - fix/**
-      - refactor/**
+      - '*'
+      - '*/*'
+      - '**'
 
 jobs:
   build:
