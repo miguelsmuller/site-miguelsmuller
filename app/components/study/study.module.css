@@ -1,0 +1,67 @@
+/* ******* STUDY ******* */
+.root {
+  padding-top: 96px;
+  padding-bottom: 56px;
+}
+
+.row {
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  gap: 32px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 375px;
+
+  border-radius: 10px;
+  padding: 20px;
+  background-color: var(--colors-lightGray);
+  border: 1px solid var(--colors-gray);
+}
+
+.cell-title {
+  font-size: 18px;
+  font-weight: var(--weight-extraBold);
+  padding-bottom: 16px;
+}
+
+.cell-content {
+  flex: 1;
+}
+
+.cell-footer {
+  display: block;
+  padding-top: 16px;
+  font-size: 14px;
+}
+.cell-footer > button,
+.cell-footer > a {
+  color: var(--colors-red);
+  text-decoration: none;
+  font-weight: var(--weight-semiBold);
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+.cell-footer > button:hover,
+.cell-footer > a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 1280px) {
+  .root {
+    padding-bottom: 128px;
+  }
+  .cell:nth-child(even) {
+    transform: translateY(32px);
+  }
+}
