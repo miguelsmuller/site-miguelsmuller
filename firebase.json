@@ -25,12 +25,7 @@
         "source": "**",
         "function": "nextjsServer"
       }
-    ],
-    "channels": {
-      "pr9-develop": {
-        "public": true
-      }
-    }
+    ]
   },
   "functions": {
     "source": ".",

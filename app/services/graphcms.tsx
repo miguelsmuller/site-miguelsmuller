@@ -8,7 +8,7 @@ let graphcmsConfig = {
 }
 
 if (process.env.GCLOUD_PROJECT === 'miguelsmuller-dev') {
-  graphcmsConfig = firebase().graphcms
+  graphcmsConfig = firebase().GRAPHCMS
 } else {
   try {
     graphcmsConfig = require('settings/graphcms.json')

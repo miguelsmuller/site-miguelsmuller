@@ -1,0 +1,31 @@
+name: Deploy to Live
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Set environment variables
+        run: |
+          echo "GRAPHCMS='${{ secrets.HYGRAPH_API }}'" >> .env
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MIGUELMULLER_SITE }}' > $HOME/gcloud.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy to Live
+        run: |
+          npx firebase-tools experiments:enable webframeworks
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools deploy --only functions,hosting -m "Deploying ${{ github.sha }}" --force
