@@ -15,7 +15,7 @@ interface TimeLineProps {
 }
 
 const Timeline = (props: TimeLineProps) => {
-  const data = props.state?.Study || []
+  const data = props.state?.study || []
   const length = data.length
   const perPage = 3
 

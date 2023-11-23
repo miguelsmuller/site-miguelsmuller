@@ -95,7 +95,7 @@ export async function getAllContentForHome(): Promise<any> {
         size
       }
     }
-    Study: studies( orderBy: completionDate_DESC) {
+    study: studies( orderBy: completionDate_DESC) {
       title
       local
       completionDate
