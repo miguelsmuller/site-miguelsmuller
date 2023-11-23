@@ -17,13 +17,17 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Install dependencies
+        run: npm ci && npm run build
+
       - name: Set environment variables
         run: |
-          echo "GRAPHCMS='${{ secrets.HYGRAPH_API }}'" >> .env
-          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MIGUELMULLER_SITE }}' > $HOME/gcloud.json
-
-      - name: Install dependencies
-        run: npm ci
+          sudo apt-get install tree --yes
+          echo '${{ secrets.HYGRAPH_API }}' > ./settings/graphcms.json
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > $HOME/gcloud.json
+          ls -la
+          tree -L 2
+          cat ./settings/graphcms.json
 
       - name: Deploy to Live
         run: |

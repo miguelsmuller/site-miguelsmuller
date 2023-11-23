@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { config as firebase } from 'firebase-functions'
+import fs from 'fs'
 
 let graphcmsConfig = {
   url: null,
   key: null
 }
 
-if (process.env.GCLOUD_PROJECT === 'miguelsmuller-dev') {
-  graphcmsConfig = firebase().GRAPHCMS
-} else {
-  try {
+try {
+  if (fs.existsSync('settings/graphcms.json')) {
     graphcmsConfig = require('settings/graphcms.json')
-  } catch (error: any) {
-    console.error('GraphCMS configuration is missing or incomplete.')
   }
+} catch (error: any) {
+  console.error('GraphCMS configuration is missing or incomplete.')
 }
 
 async function fetchAPI(query: any): Promise<any> {
