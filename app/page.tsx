@@ -19,9 +19,8 @@ export default async function Home() {
   return (
     <Fragment>
       <Header state={data} />
-      {/* <p>Isso é um teste pro site em modo preview 00:25</p> */}
       <Overview state={data} />
-      {/* <Study state={data} /> */}
+      <Study state={data} />
       <Portifolio state={data} />
       <Testimonies state={data} />
       <Footer state={data} />
