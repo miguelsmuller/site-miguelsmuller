@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import styles from './study.module.css'
+import styles from './study.module.scss'
 
 import Title from '../title/title'
 import Timeline from './study-timeline/Timeline'
