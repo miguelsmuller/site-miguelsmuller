@@ -1,13 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-
-import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'
-import 'react-vertical-timeline-component/style.min.css'
-
-import IconCap from '../../graphics/icon-cap'
 import IconPlus from '../../graphics/icon-plus'
-
 import styles from './study-timeline.module.scss'
 
 interface TimeLineProps {
@@ -15,27 +9,33 @@ interface TimeLineProps {
 }
 
 const Timeline = (props: TimeLineProps) => {
-  const data = props.state?.Study || []
+  const data = props.state?.study || []
   const length = data.length
-  const perPage = 3
+  const initialDisplay = 12
+  const perPage = 4
 
   const renderTimelineElement = (item: any, index: number) => {
     return (
-      <VerticalTimelineElement
-        visible={true}
-        key={index}
-        date={renderDate(item)}
-        dateClassName={`${styles.course_date}`}
-        className={`${`vertical-timeline-element--${item.studyType}`}`}
-        icon={<IconCap />}
-      >
-
+      <li key={index}>
         {renderTitle(item)}
-        {renderSubTitle(item)}
-        {renderCertificate(item)}
+        <div className={`${styles.course_info}`}>
+        {renderDate(item)}
+          {renderSubTitle(item)}
+          {renderCertificate(item)}
+        </div>
         {renderSkills(item)}
+      </li>
+    )
+  }
 
-      </VerticalTimelineElement>
+  const renderDate = (item: any) => {
+    const currentDate = new Date(item.completionDate)
+    const formattedDate = currentDate.toLocaleDateString('pt-BR')
+
+    return (
+      <p className={`${styles.course_date}`}>
+        {formattedDate}
+      </p>
     )
   }
 
@@ -54,47 +54,34 @@ const Timeline = (props: TimeLineProps) => {
       subtitle = subtitle + ' - ' + item.hours + ' hrs'
     )
     return (
-      <p className={`${styles.course_subtitle}`}>
+      <p className={`${styles.course_organization}`}>
         {subtitle}
       </p>
     )
   }
 
-  const renderCertificate = (item: any) => {
-    return (
-      item.certificateURl && (
-        <a
-          href={item.certificateURl}
-          target="_blank"
-          className={`${styles.course_certification}`}
-          rel="noreferrer"
-        >
-          Link do Certificado
-        </a>
-      )
+  const renderCertificate = (item: any) => (
+    item.certificateURl && (
+      <a
+        href={item.certificateURl}
+        target="_blank"
+        className={`${styles.course_certification}`}
+        rel="noreferrer"
+      >
+        Link do Certificado
+      </a>
     )
-  }
+  )
 
-  const renderSkills = (item: any) => {
-    return (
-      item.theme && (
-        <ul className={`${styles.course_skills}`}>
-          {item.theme.map((skill:any, index:number) => (
-            <li key={index}>{formatSkillCase(skill)}</li>
-          ))}
-        </ul>
-      )
+  const renderSkills = (item: any) => (
+    item.theme && (
+      <ul className={`${styles.course_skills}`}>
+        {item.theme.map((skill:any, index:number) => (
+          <li key={index}>{formatSkillCase(skill)}</li>
+        ))}
+      </ul>
     )
-  }
-
-  const renderDate = (item: any) => {
-    const currentDate = new Date(item.completionDate)
-    const formattedDate = currentDate.toLocaleDateString('pt-BR')
-
-    return (
-      formattedDate
-    )
-  }
+  )
 
   const formatSkillCase = (skill: string) => {
     const withoutUnderscores = skill.replace(/_/g, ' ')
@@ -108,20 +95,20 @@ const Timeline = (props: TimeLineProps) => {
   }
 
   const loadMoreElements = () => {
-    const newElements = [
-      data.slice(counter, counter + perPage).map((item: any, index: number) => {
-        return (renderTimelineElement(item, index + counter))
-      })
-    ]
-
-    setElements(oldElements => [...oldElements, newElements])
+    setElements((oldElements) => [
+      ...oldElements,
+      data.slice(counter, counter + perPage).map((item: any, index: number) =>
+        renderTimelineElement(item, index + counter)
+      )
+    ])
+    setCounter(counter + perPage)
   }
 
   const [counter, setCounter] = useState(perPage)
 
   const [elements, setElements] = useState(
     [
-      data.slice(0, perPage).map((item: any, index: number) => {
+      data.slice(0, initialDisplay).map((item: any, index: number) => {
         return (renderTimelineElement(item, index))
       })
     ]
@@ -129,25 +116,18 @@ const Timeline = (props: TimeLineProps) => {
 
   return (
     <div className={`${styles.root}`}>
-      {/* <VerticalTimeline lineColor={theme.colors.lightGray}> */}
-      <VerticalTimeline>
-
+      <ul className={`${styles.grid}`}>
         {elements}
+      </ul>
 
-        {length <= counter
-          ? null
-          : <VerticalTimelineElement
-            visible={true}
-            className={`${'vertical-timeline-element--Click'}`}
-            icon={<IconPlus />}
-            iconOnClick={() => {
-              loadMoreElements()
-              setCounter(counter + perPage)
-            }}
-          >
-          </VerticalTimelineElement>
-        }
-      </VerticalTimeline>
+      {length > counter && (
+        <button
+          className={`${styles.btn_load_more}`}
+          onClick={ () => { loadMoreElements() }}
+        >
+        <IconPlus />
+      </button>
+      )}
     </div>
   )
 }

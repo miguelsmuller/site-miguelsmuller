@@ -2,46 +2,51 @@
 
 import fs from 'fs'
 
-let graphcmsConfig = {
-  url: null,
-  key: null
-}
-
-try {
-  if (fs.existsSync('settings/graphcms.json')) {
-    graphcmsConfig = require('settings/graphcms.json')
-  }
-} catch (error: any) {
-  console.error('GraphCMS configuration is missing or incomplete.')
-}
-
-async function fetchAPI(query: any): Promise<any> {
-  let json = {
-    data: {}
+function loadHygraphConfig() {
+  let hygraphConfig = {
+    url: null,
+    key: null
   }
 
-  if (graphcmsConfig?.url != null || graphcmsConfig?.key != null) {
-    const urlDefinitiva = graphcmsConfig.url || ''
-    const res = await fetch(urlDefinitiva, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${graphcmsConfig.key}`
-      },
-      body: JSON.stringify({
-        query
+  try {
+    if (fs.existsSync('settings/graphcms.json')) {
+      hygraphConfig = require('settings/graphcms.json')
+    }
+  } catch (error: any) {
+    console.error('Error while loading GraphCMS configuration:', error.message)
+  }
+
+  return hygraphConfig
+}
+
+async function callHygraphAPI(query: string): Promise<any> {
+  const hygraphConfig = loadHygraphConfig()
+
+  if (hygraphConfig?.url && hygraphConfig?.key) {
+    const urlDefinitiva = hygraphConfig.url || ''
+    try {
+      const res = await fetch(urlDefinitiva, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${hygraphConfig.key}`
+        },
+        body: JSON.stringify({ query })
       })
-    })
-    json = await res.json()
-  } else {
-    console.error('GraphCMS configuration is missing or incomplete.')
-  }
 
-  return json.data
+      const json = await res.json()
+      return json.data
+    } catch (error: any) {
+      console.error('Error while fetching data from GraphCMS:', error.message)
+    }
+  } else {
+    console.error('GraphCMS configuration is missing required fields.')
+    return null
+  }
 }
 
 export async function getAllContentForHome(): Promise<any> {
-  const data = await fetchAPI(`
+  const data = await callHygraphAPI(`
   {
     pageHome(where: {id: "ckyumldxc382m0b800hvbebqn"}) {
       coverTitle
@@ -90,7 +95,7 @@ export async function getAllContentForHome(): Promise<any> {
         size
       }
     }
-    Study: studies( orderBy: completionDate_DESC) {
+    study: studies( orderBy: completionDate_DESC) {
       title
       local
       completionDate
