@@ -30,19 +30,23 @@ export default function Header(props: HeaderProps) {
     DOWN = 'Down'
   }
 
+  const handleScroll = (pageYOffset: number, height: number) => {
+    if (pageYOffset <= height) {
+      setHeaderVisible(false)
+    }
+  }
+
+  const handleNavigationToggle = () => setNavigationVisible(!isNavigationVisible)
+
   useEffect(() => {
     const headerElement = document.querySelector('#header__root') as HTMLElement
     const { height } = headerElement.getBoundingClientRect()
 
     const scrollSpy$ = fromEvent(window, 'scroll').pipe(
       throttleTime(10),
-      map(() => window.pageYOffset),
-      tap(pageYOffset => {
-        if (pageYOffset <= height) {
-          setHeaderVisible(false)
-        }
-      }),
-      filter(pageYOffset => pageYOffset >= height),
+      map(() => window.scrollY),
+      tap(scrollY => handleScroll(scrollY, height)),
+      filter(scrollY => scrollY >= height),
       pairwise(),
       map(
         ([previous, current]): ScrollDirection =>
@@ -51,29 +55,16 @@ export default function Header(props: HeaderProps) {
       distinctUntilChanged()
     )
 
-    const scrollUp$ = scrollSpy$.pipe(
-      filter(direction => direction === ScrollDirection.UP)
-    )
-    scrollUp$.subscribe(() => {
-      setHeaderVisible(true)
-    })
+    const scrollUp$ = scrollSpy$.pipe(filter(direction => direction === ScrollDirection.UP))
+    scrollUp$.subscribe(() => setHeaderVisible(true))
 
-    const scrollDown = scrollSpy$.pipe(
-      filter(direction => direction === ScrollDirection.DOWN)
-    )
-    scrollDown.subscribe(() => {
-      setHeaderVisible(false)
-    })
-    // }
+    const scrollDown$ = scrollSpy$.pipe(filter(direction => direction === ScrollDirection.DOWN))
+    scrollDown$.subscribe(() => setHeaderVisible(false))
 
     return () => {
-      // window.removeEventListener('scroll', () => handleScroll)
+      // Cleanup, if needed
     }
   }, [])
-
-  const handleNavigationToggle = () => {
-    return setNavigationVisible(!isNavigationVisible)
-  }
 
   return (
     <header id="header__root" className={`${styles.header__root} ${isHeaderVisible ? styles.visible : ''}`}>
