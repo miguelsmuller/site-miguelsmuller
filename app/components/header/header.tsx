@@ -14,6 +14,7 @@ import {
 import HeaderLogo from '../graphics/header-logo'
 import HeaderButton from '../graphics/header-button'
 import Navigation from './navigation'
+import DarkModeButton from '../btnDarkMode/DarkMode'
 import styles from './header.module.scss'
 
 interface HeaderProps {
@@ -83,6 +84,7 @@ export default function Header(props: HeaderProps) {
         <div className={`${styles.header__wrap} ${isNavigationVisible ? styles.visible : ''}`}>
           <Navigation state={props.state} />
         </div>
+        <DarkModeButton />
       </div>
     </header>
   )
