@@ -33,11 +33,11 @@
     .footer_first__1col {
       flex: 1 1 100%;
     }
-  
+
     .footer_first__2col {
       flex: 1 1 45%;
     }
-  
+
     .footer_first__3col {
       flex: 1 1 55%;
     }
@@ -49,11 +49,11 @@
     .footer_first__1col {
       flex: 1 1 25%;
     }
-  
+
     .footer_first__2col {
       flex: 1 1 35%;
     }
-  
+
     .footer_first__3col {
       flex: 1 1 45%;
     }
@@ -65,11 +65,11 @@
     .footer_first__1col {
       flex: 1 1 25%;
     }
-  
+
     .footer_first__2col {
       flex: 1 1 40%;
     }
-  
+
     .footer_first__3col {
       flex: 1 1 35%;
     }
@@ -151,12 +151,12 @@
 .footer_second__root{
   padding: 16px 0px;
 
-  background-color: var(--colors-lightGray);
-  border-top: 6px solid var(--colors-darkGray);
+  background-color: var(--colors-footer-bg);
+  border-top: 6px solid var(--colors-footer-border);
   font-weight: var(--weight-bold);
 
   a {
-    color: var(--colors-darkBlue);
+    color: var(--colors-footer-text);
     text-decoration: none;
   }
 

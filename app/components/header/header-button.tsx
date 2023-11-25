@@ -13,7 +13,7 @@ export default function HeaderButton() {
           <path d="M0 0h48v48H0z"></path>
         </clipPath>
       </defs>
-      <path fill="#fff" d="M0 0h48v48H0z"></path>
+
       <rect width="48" height="48" fill="#2c3e50" rx="8"></rect>
       <path
         fill="#fff"
