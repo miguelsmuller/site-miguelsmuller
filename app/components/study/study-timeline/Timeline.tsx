@@ -97,14 +97,14 @@ const Timeline = (props: TimeLineProps) => {
   const loadMoreElements = () => {
     setElements((oldElements) => [
       ...oldElements,
-      data.slice(counter, counter + perPage).map((item: any, index: number) =>
+      ...data.slice(counter, counter + perPage).map((item: any, index: number) =>
         renderTimelineElement(item, index + counter)
       )
     ])
     setCounter(counter + perPage)
   }
 
-  const [counter, setCounter] = useState(perPage)
+  const [counter, setCounter] = useState(initialDisplay)
 
   const [elements, setElements] = useState(
     [
