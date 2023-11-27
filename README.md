@@ -13,7 +13,7 @@
 
 ## :pushpin: **Apresentação**
 
-Em 2013 quando comecei a desenvolver como freelancer eu criei uma agência pessoal e a nomeie como “Devim”. Manter o nome Devim me afastada da minha xxx por que eu não conseguia dar atenção como eu queria a essa organismo vivo que era essa agência pessoal em virtude de outros compromissos profissionais.
+Em 2010, quando iniciei minhas atividades como desenvolvedor freelancer, fundei minha agência pessoal chamada 'Devim'. Atualmente, manter o nome Devim me distancia do meu crescimento profissional, pois não é mais meu objetivo manter uma agência pessoal ou prosseguir com o desenvolvimento freelancer. Agora, busco consolidar minha carreira de forma contínua em ambientes corporativos.
 
 Esse projeto é a versão reformulada do site só que agora com meu nome.
 
