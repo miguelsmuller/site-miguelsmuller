@@ -14,7 +14,7 @@ import {
 import HeaderLogo from './header-logo'
 import HeaderButton from './header-button'
 import Navigation from './navigation'
-import DarkModeButton from '../btnDarkMode/DarkMode'
+import DarkModeButton from '../btnDarkMode/BtnDarkMode'
 import styles from './header.module.scss'
 
 interface HeaderProps {
