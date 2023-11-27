@@ -2,17 +2,15 @@
 
 import React, { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
-import { FaMoon, FaSun } from 'react-icons/fa'
-import styles from './DarkMode.module.scss'
 
-const DarkModeButton = () => {
-  const [mounted, setMounted] = useState(false)
+export const useDarkMode = () => {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
 
-    // Adicione o código para verificar o modo do sistema
+    // Verificar o modo do sistema
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
     if (!theme) {
       setTheme(prefersDarkMode ? 'dark' : 'light')
@@ -30,19 +28,7 @@ const DarkModeButton = () => {
     return () => {
       darkModeMediaQuery.removeEventListener('change', darkModeListener)
     }
-  }, [theme, setTheme])
+  }, [setTheme])
 
-  if (!mounted) {
-    return null
-  }
-
-  return (
-    <button
-      className={`${styles.btn_root}`}
-      onClick={(e) => (theme === 'dark' ? setTheme('light') : setTheme('dark'))}>
-        {theme === 'dark' ? <FaMoon /> : <FaSun />}
-    </button>
-  )
+  return { mounted, theme, setTheme }
 }
-
-export default DarkModeButton
