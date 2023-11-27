@@ -89,13 +89,13 @@ Run the **Development Environment** with the NPM script:
 
 <br/>
 
-**[GITHUB ACTIONS](https://github.com/miguelsmuller/site-miguelsmuller-dev/actions)** - This project utilizes two GitHub Actions workflows for deployment:
+**[GITHUB ACTIONS](https://github.com/miguelsmuller/site-miguelsmuller/actions)** - This project utilizes two GitHub Actions workflows for deployment:
 
 - **Deploy to Live ([firebase-hosting-master.yml](./.github/workflows/firebase-hosting-master.yml)):** This workflow is automatically triggered on commits to the main branch (master) and is responsible for deploying the stable version of the site to the production environment.
-  - You can track the progress of this workflow [here](https://github.com/miguelsmuller/site-miguelsmuller-dev/actions/workflows/firebase-hosting-master.yml).
+  - You can track the progress of this workflow [here](https://github.com/miguelsmuller/site-miguelsmuller/actions/workflows/firebase-hosting-master.yml).
 
 - **Deploy to Preview ([firebase-hosting-channel.yml](./.github/workflows/firebase-hosting-channel.yml)):** This workflow is automatically triggered on commits to branches other than the main (master) and is responsible for creating a preview environment to test new features. Links to these preview environments are generated randomly and temporarily.
-  - You can track the progress of this workflow [here](https://github.com/miguelsmuller/site-miguelsmuller-dev/actions/workflows/firebase-hosting-channel.yml).
+  - You can track the progress of this workflow [here](https://github.com/miguelsmuller/site-miguelsmuller/actions/workflows/firebase-hosting-channel.yml).
 
 
 ### :fire: **Firebase Functions**

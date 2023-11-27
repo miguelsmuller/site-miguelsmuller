@@ -13,7 +13,7 @@
 
 ## :pushpin: **Apresentação**
 
-Em 2013 quando comecei a desenvolver como freelancer eu criei uma agência pessoal e a nomeie como “Devim”. Manter o nome Devim me afastada da minha xxx por que eu não conseguia dar atenção como eu queria a essa organismo vivo que era essa agência pessoal em virtude de outros compromissos profissionais.
+Em 2010, quando iniciei minhas atividades como desenvolvedor freelancer, fundei minha agência pessoal chamada 'Devim'. Atualmente, manter o nome Devim me distancia do meu crescimento profissional, pois não é mais meu objetivo manter uma agência pessoal ou prosseguir com o desenvolvimento freelancer. Agora, busco consolidar minha carreira de forma contínua em ambientes corporativos.
 
 Esse projeto é a versão reformulada do site só que agora com meu nome.
 
@@ -91,13 +91,13 @@ Execute o **Ambiente de Desenvolvimento** com o script NPM:
 <br/>
 
 ## :rocket: **Deploy**
-**[GITHUB ACTIONS](https://github.com/miguelsmuller/site-miguelsmuller-dev/actions)** - Este projeto utiliza duas workflows do GitHub Actions para implantação:
+**[GITHUB ACTIONS](https://github.com/miguelsmuller/site-miguelsmuller/actions)** - Este projeto utiliza duas workflows do GitHub Actions para implantação:
 
 - **Deploy to Live ([firebase-hosting-master.yml](./.github/workflows/firebase-hosting-master.yml)):** Esta workflow é acionada automaticamente em commits na branch principal (master) e é responsável por implantar a versão estável do site no ambiente de produção.
-  - Você pode acompanhar o progresso dessa workflow [aqui](https://github.com/miguelsmuller/site-miguelsmuller-dev/actions/workflows/firebase-hosting-master.yml).
+  - Você pode acompanhar o progresso dessa workflow [aqui](https://github.com/miguelsmuller/site-miguelsmuller/actions/workflows/firebase-hosting-master.yml).
 
 - **Deploy to Preview ([firebase-hosting-channel.yml](./.github/workflows/firebase-hosting-channel.yml)):** Esta workflow é acionada automaticamente em commits em branches que não sejam a principal (master) e é responsável por criar um ambiente de pré-visualização (preview) para testar novas funcionalidades. Os links para esses ambientes de pré-visualização são gerados de forma aleatória e temporária.
-  - Você pode acompanhar o progresso dessa workflow [aqui](https://github.com/miguelsmuller/site-miguelsmuller-dev/actions/workflows/firebase-hosting-channel.yml).
+  - Você pode acompanhar o progresso dessa workflow [aqui](https://github.com/miguelsmuller/site-miguelsmuller/actions/workflows/firebase-hosting-channel.yml).
 
 
 ### :fire: **Firebase Functions**
