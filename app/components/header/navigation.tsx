@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 
 import styles from './header.module.scss'
+import Link from 'next/link';
 
 interface NavigationProps {
   state?: Record<string, any>;
@@ -15,33 +16,33 @@ export default function Navigation(props: NavigationProps) {
     <Fragment>
       <ul className={`${styles.header__wrap__list}`}>
         <li>
-          <a
+          <Link
             target="_blank"
             href={github}
             rel="noreferrer"
           >
             Github
-          </a>
+          </Link>
         </li>
 
         <li>
-          <a
+          <Link
             target="_blank"
             href={linkedin}
             rel="noreferrer"
           >
             Linkedin
-          </a>
+          </Link>
         </li>
 
         <li>
-          <a
+          <Link
             target="_blank"
             href={curriculo}
             rel="noreferrer"
           >
             Meu Currículo
-          </a>
+          </Link>
         </li>
       </ul>
     </Fragment>

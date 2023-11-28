@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import React from 'react'
+import Link from 'next/link';
 
 import styles from './Footer.module.scss'
 
@@ -21,7 +21,7 @@ export default function FooterFirst(props: FooterFirstProps) {
       <div className={`${styles.footer_first__container} container`}>
         <div className={`${styles.footer_first__1col}`}>
           <div className={`${styles.component_social}`}>
-            <a
+            <Link 
               href={personalUrlLinkedin}
               className={`${styles.icon1}`}
               target="_blank"
@@ -33,9 +33,9 @@ export default function FooterFirst(props: FooterFirstProps) {
                 width="62"
                 height="62"
               />
-            </a>
+            </Link>
 
-            <a
+            <Link
               href={personalUrlGithub}
               className={`${styles.icon2}`}
               target="_blank"
@@ -47,7 +47,7 @@ export default function FooterFirst(props: FooterFirstProps) {
                 width="62"
                 height="62"
               />
-            </a>
+            </Link>
 
             <div className="logo">
               <img
@@ -58,7 +58,7 @@ export default function FooterFirst(props: FooterFirstProps) {
               />
             </div>
 
-            <a
+            <Link
               href={personalUrlTwitter}
               className={`${styles.icon3}`}
               target="_blank"
@@ -70,9 +70,9 @@ export default function FooterFirst(props: FooterFirstProps) {
                 width="62"
                 height="62"
               />
-            </a>
+            </Link>
 
-            <a
+            <Link
               href={personalUrlInstagram}
               className={`${styles.icon4}`}
               target="_blank"
@@ -84,26 +84,26 @@ export default function FooterFirst(props: FooterFirstProps) {
                 width="62"
                 height="62"
               />
-            </a>
+            </Link>
           </div>
         </div>
 
         <div className={`${styles.footer_first__2col}`}>
           <div className={`${styles.component_navigation}`}>
             <li>
-              <a href="/">Home</a>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <a href={personalUrlGithub}>GitHub</a>
+              <Link href={personalUrlGithub}>GitHub</Link>
             </li>
             <li>
-              <a href={personalUrlGithub}>Linkedin</a>
+              <Link href={personalUrlGithub}>Linkedin</Link>
             </li>
             <li>
-              <a href={personalUrlCurriculo}>Currículo</a>
+              <Link href={personalUrlCurriculo}>Currículo</Link>
             </li>
             <li>
-              <a href="/">Mapa do Site</a>
+              <Link href="/">Mapa do Site</Link>
             </li>
           </div>
         </div>

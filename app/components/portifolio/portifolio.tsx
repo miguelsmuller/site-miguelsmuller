@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 
 import Title from '../title/title'
 import styles from './Portifolio.module.scss'
+import Link from 'next/link';
 
 interface PortifolioProps {
   state?: Record<string, any>;
@@ -16,9 +17,9 @@ export default function Portifolio(props: PortifolioProps) {
     return (
       <Fragment key={`item-${index}`}>
         <li>
-          <a target="_blank" href={item?.projectUrl || '#'} rel="noreferrer">
+          <Link target="_blank" href={item?.projectUrl || '#'} rel="noreferrer">
             <img src={item?.image?.url} alt="" />
-          </a>
+          </Link>
         </li>
       </Fragment>
     )
