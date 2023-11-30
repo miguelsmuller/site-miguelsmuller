@@ -1,8 +1,6 @@
 import React from 'react'
 import FooterFirst from './footer-first'
 import FooterSecond from './footer-second'
-import styles from './Footer.module.scss'
-
 
 interface FooterProps {
   state?: Record<string, any>;

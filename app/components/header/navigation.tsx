@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 import styles from './header.module.scss'
-import Link from 'next/link';
+import Link from 'next/link'
 
 interface NavigationProps {
   state?: Record<string, any>;

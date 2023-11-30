@@ -3,8 +3,7 @@
 import React, { useState } from 'react'
 import IconPlus from '../../graphics/icon-plus'
 import styles from './study-timeline.module.scss'
-import Link from 'next/link';
-
+import Link from 'next/link'
 
 interface TimeLineProps {
   state?: Record<string, any>;
@@ -110,9 +109,9 @@ const Timeline = (props: TimeLineProps) => {
 
   const [elements, setElements] = useState(
     data.slice(0, initialDisplay).map((item: any, index: number) => {
-      return renderTimelineElement(item, index);
+      return renderTimelineElement(item, index)
     })
-  );
+  )
 
   return (
     <div className={`${styles.root}`}>

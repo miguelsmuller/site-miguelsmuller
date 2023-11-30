@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link';
+import Link from 'next/link'
 
 import styles from './Footer.module.scss'
 
@@ -21,7 +21,7 @@ export default function FooterFirst(props: FooterFirstProps) {
       <div className={`${styles.footer_first__container} container`}>
         <div className={`${styles.footer_first__1col}`}>
           <div className={`${styles.component_social}`}>
-            <Link 
+            <Link
               href={personalUrlLinkedin}
               className={`${styles.icon1}`}
               target="_blank"

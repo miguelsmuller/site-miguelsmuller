@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import Title from '../title/title'
 import styles from './Portifolio.module.scss'
-import Link from 'next/link';
+import Link from 'next/link'
 
 interface PortifolioProps {
   state?: Record<string, any>;
