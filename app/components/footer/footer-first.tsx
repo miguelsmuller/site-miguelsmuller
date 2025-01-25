@@ -8,13 +8,14 @@ interface FooterFirstProps {
 }
 
 export default function FooterFirst(props: FooterFirstProps) {
-  const data = props.state
-  const personalUrlLinkedin: string = data?.pageHome?.personalUrlLinkedin || ''
-  const personalUrlGithub: string = data?.pageHome?.personalUrlGithub || ''
-  const personalUrlTwitter: string = data?.pageHome?.personalUrlTwitter || ''
-  const personalUrlInstagram: string = data?.pageHome?.personalUrlInstagram || ''
-  const personalUrlCurriculo: string = data?.pageHome?.personalUrlCurriculo || ''
-  const footerMail: string = data?.pageHome?.footerMail || ''
+  const pageHome = props?.state?.pageHomes?.[0] || {}
+
+  const personalUrlLinkedin: string = pageHome?.personalUrlLinkedin || ''
+  const personalUrlGithub: string = pageHome?.personalUrlGithub || ''
+  const personalUrlTwitter: string = pageHome?.personalUrlTwitter || ''
+  const personalUrlInstagram: string = pageHome?.personalUrlInstagram || ''
+  const personalUrlCurriculo: string = pageHome?.personalUrlCurriculo || ''
+  const footerMail: string = pageHome?.footerMail || ''
 
   return (
     <div className={`${styles.footer_first__root}`}>

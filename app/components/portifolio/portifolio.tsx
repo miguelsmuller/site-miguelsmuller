@@ -11,7 +11,7 @@ interface PortifolioProps {
 export default function Portifolio(props: PortifolioProps) {
   const data = props.state
   const portifolio = data?.portifolios || []
-  const portifolioText: string = props?.state?.pageHome?.portifolioText || ''
+  const portifolioText: string = props?.state?.pageHomes?.portifolioText || ''
 
   const renderItens = (item: any, index: number) => {
     return (

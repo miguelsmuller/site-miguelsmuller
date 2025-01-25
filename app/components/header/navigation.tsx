@@ -8,9 +8,11 @@ interface NavigationProps {
 }
 
 export default function Navigation(props: NavigationProps) {
-  const github: string = props?.state?.pageHome?.personalUrlGithub || ''
-  const linkedin: string = props?.state?.pageHome?.personalUrlLinkedin || ''
-  const curriculo: string = props?.state?.pageHome?.personalUrlCurriculo.url || ''
+  const pageHome = props?.state?.pageHomes?.[0] || {}
+
+  const github: string = pageHome?.personalUrlGithub || ''
+  const linkedin: string = pageHome?.personalUrlLinkedin || ''
+  const curriculo: string = pageHome?.personalUrlCurriculo.url || ''
 
   return (
     <Fragment>
