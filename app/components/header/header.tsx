@@ -16,6 +16,7 @@ import HeaderButton from './header-button'
 import Navigation from './navigation'
 import DarkModeButton from '../DarkMode/BtnDarkMode'
 import styles from './header.module.scss'
+import Link from 'next/link'
 
 interface HeaderProps {
   refElement?: React.RefObject<HTMLDivElement> | null;
@@ -70,9 +71,9 @@ export default function Header(props: HeaderProps) {
   return (
     <header id="header__root" className={`${styles.header__root} ${isHeaderVisible ? styles.visible : ''}`}>
       <div className={`${styles.header__container} container`}>
-        <a href="/">
+        <Link href="/">
           <HeaderLogo />
-        </a>
+        </Link>
 
         <button
           className={`${styles.header__wrap__collapse}`}

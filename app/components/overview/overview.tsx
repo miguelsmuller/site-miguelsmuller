@@ -11,8 +11,10 @@ interface OverviewProps {
 }
 
 export default function Overview(props: OverviewProps) {
-  const overviewImage: string = props?.state?.pageHome?.overviewImage?.url || ''
-  const overviewText: string = props?.state?.pageHome?.overviewText || ''
+  const pageHome = props?.state?.pageHomes?.[0] || {}
+
+  const overviewImage: string = pageHome?.overviewImage?.url || ''
+  const overviewText: string = pageHome?.overviewText || ''
 
   return (
     <section className={`${styles.overview__container} container`}>

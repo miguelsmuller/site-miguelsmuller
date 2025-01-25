@@ -6,6 +6,7 @@ import Overview from './components/overview/overview'
 import Study from './components/study/study'
 import Portifolio from './components/portifolio/portifolio'
 import Footer from './components/footer/footer'
+
 import { getAllContentForHome } from './services/graphcms'
 
 export const metadata: Metadata = {

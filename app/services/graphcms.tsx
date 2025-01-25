@@ -48,7 +48,7 @@ async function callHygraphAPI(query: string): Promise<any> {
 export async function getAllContentForHome(): Promise<any> {
   const data = await callHygraphAPI(`
   {
-    pageHome(where: {id: "ckyumldxc382m0b800hvbebqn"}) {
+    pageHomes(first: 1, orderBy: createdAt_DESC) {
       coverTitle
       coverTagLine
       personalUrlGithub

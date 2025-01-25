@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 
 import Title from '../title/title'
 import styles from './Portifolio.module.scss'
+import Link from 'next/link'
 
 interface PortifolioProps {
   state?: Record<string, any>;
@@ -10,15 +11,15 @@ interface PortifolioProps {
 export default function Portifolio(props: PortifolioProps) {
   const data = props.state
   const portifolio = data?.portifolios || []
-  const portifolioText: string = props?.state?.pageHome?.portifolioText || ''
+  const portifolioText: string = props?.state?.pageHomes?.portifolioText || ''
 
   const renderItens = (item: any, index: number) => {
     return (
       <Fragment key={`item-${index}`}>
         <li>
-          <a target="_blank" href={item?.projectUrl || '#'} rel="noreferrer">
+          <Link target="_blank" href={item?.projectUrl || '#'} rel="noreferrer">
             <img src={item?.image?.url} alt="" />
-          </a>
+          </Link>
         </li>
       </Fragment>
     )

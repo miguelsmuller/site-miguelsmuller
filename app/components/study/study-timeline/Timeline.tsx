@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import IconPlus from '../../graphics/icon-plus'
 import styles from './study-timeline.module.scss'
+import Link from 'next/link'
 
 interface TimeLineProps {
   state?: Record<string, any>;
@@ -19,7 +20,7 @@ const Timeline = (props: TimeLineProps) => {
       <li key={index}>
         {renderTitle(item)}
         <div className={`${styles.course_info}`}>
-        {renderDate(item)}
+          {renderDate(item)}
           {renderSubTitle(item)}
           {renderCertificate(item)}
         </div>
@@ -62,14 +63,14 @@ const Timeline = (props: TimeLineProps) => {
 
   const renderCertificate = (item: any) => (
     item.certificateURl && (
-      <a
+      <Link
         href={item.certificateURl}
         target="_blank"
         className={`${styles.course_certification}`}
         rel="noreferrer"
       >
         Link do Certificado
-      </a>
+      </Link>
     )
   )
 
@@ -95,7 +96,7 @@ const Timeline = (props: TimeLineProps) => {
   }
 
   const loadMoreElements = () => {
-    setElements((oldElements) => [
+    setElements((oldElements: JSX.Element[]) => [
       ...oldElements,
       ...data.slice(counter, counter + perPage).map((item: any, index: number) =>
         renderTimelineElement(item, index + counter)
@@ -107,11 +108,9 @@ const Timeline = (props: TimeLineProps) => {
   const [counter, setCounter] = useState(initialDisplay)
 
   const [elements, setElements] = useState(
-    [
-      data.slice(0, initialDisplay).map((item: any, index: number) => {
-        return (renderTimelineElement(item, index))
-      })
-    ]
+    data.slice(0, initialDisplay).map((item: any, index: number) => {
+      return renderTimelineElement(item, index)
+    })
   )
 
   return (
