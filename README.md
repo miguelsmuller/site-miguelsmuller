@@ -66,7 +66,7 @@ Os requerimentos para execução local do projeto são simples.
 
 `$ node --version && npm --version`
 
-_Para referência foram no desenvolvimento NodeJS v18 e NPM v9_
+_Para referência foram no desenvolvimento NodeJS v22 e NPM v9_
 
 Instale as **Dependências** do projeto com:
 `$ npm install`
