@@ -66,7 +66,7 @@ You need to have **[NodeJS](https://nodejs.org/)** and **[NPM](https://www.npmjs
 
 `$ node --version && npm --version`
 
-_For reference, NodeJS v18 and NPM v9 were used in development._
+_For reference, NodeJS v22 and NPM v9 were used in development._
 
 Install project **dependencies** with:
 `$ npm install`
