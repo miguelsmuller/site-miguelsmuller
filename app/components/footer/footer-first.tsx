@@ -1,14 +1,14 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 
 import styles from './Footer.module.scss'
+import { useDataContext } from '../../context/DataContext'
 
-interface FooterFirstProps {
-  state?: Record<string, any>;
-}
-
-export default function FooterFirst(props: FooterFirstProps) {
-  const pageHome = props?.state?.pageHomes?.[0] || {}
+export default function FooterFirst() {
+  const { data } = useDataContext() as { data: any }
+  const pageHome = data?.pageHomes?.[0] || {}
 
   const personalUrlLinkedin: string = pageHome?.personalUrlLinkedin || ''
   const personalUrlGithub: string = pageHome?.personalUrlGithub || ''

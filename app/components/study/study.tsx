@@ -1,21 +1,22 @@
+'use client'
+
 import React, { Fragment } from 'react'
 
 import styles from './study.module.scss'
 
 import Title from '../title/title'
 import Timeline from './study-timeline/Timeline'
+import { useDataContext } from '../../context/DataContext'
 
-interface StudyProps {
-  state?: Record<string, any>;
-}
-
-export default function Study(props: StudyProps) {
+export default function Study() {
+  const { data } = useDataContext() as { data: any }
+  const hasStudy = data?.study && data.study.length > 0
   return (
     <Fragment>
       <div className={`${styles.root} container`}>
         <Title text="O que eu já estudei?" />
         <div className="row">
-          <Timeline state={props.state} />
+          {hasStudy && <Timeline />}
         </div>
       </div>
     </Fragment>

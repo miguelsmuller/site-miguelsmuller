@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 import styles from './overview.module.css'
@@ -5,13 +7,11 @@ import styles from './overview.module.css'
 import Title from '../title/title'
 
 import PresentationPhoto from './presentation-photo'
+import { useDataContext } from '../../context/DataContext'
 
-interface OverviewProps {
-  state?: Record<string, any>;
-}
-
-export default function Overview(props: OverviewProps) {
-  const pageHome = props?.state?.pageHomes?.[0] || {}
+export default function Overview() {
+  const { data } = useDataContext() as { data: any }
+  const pageHome = data?.pageHomes?.[0] || {}
 
   const overviewImage: string = pageHome?.overviewImage?.url || ''
   const overviewText: string = pageHome?.overviewText || ''

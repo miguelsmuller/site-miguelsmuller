@@ -1,14 +1,10 @@
+'use client'
+
 import React, { Fragment } from 'react'
 import Link from 'next/link'
 import styles from './Footer.module.scss'
 
-interface FooterSecondProps {
-  state?: Record<string, any>;
-}
-
-export default function FooterSecond(props: FooterSecondProps) {
-  const data = props.state
-
+export default function FooterSecond() {
   const items = [
     {
       href: '#',
