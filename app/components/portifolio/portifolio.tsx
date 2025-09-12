@@ -1,17 +1,16 @@
+'use client'
+
 import React, { Fragment } from 'react'
 
 import Title from '../title/title'
 import styles from './Portifolio.module.scss'
 import Link from 'next/link'
+import { useDataContext } from '../../context/DataContext'
 
-interface PortifolioProps {
-  state?: Record<string, any>;
-}
-
-export default function Portifolio(props: PortifolioProps) {
-  const data = props.state
+export default function Portifolio() {
+  const { data } = useDataContext() as { data: any }
   const portifolio = data?.portifolios || []
-  const portifolioText: string = props?.state?.pageHomes?.portifolioText || ''
+  const portifolioText: string = data?.pageHomes?.[0]?.portifolioText || ''
 
   const renderItens = (item: any, index: number) => {
     return (

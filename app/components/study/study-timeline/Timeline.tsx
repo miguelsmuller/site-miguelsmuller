@@ -4,14 +4,12 @@ import React, { useState } from 'react'
 import IconPlus from '../../graphics/icon-plus'
 import styles from './study-timeline.module.scss'
 import Link from 'next/link'
+import { useDataContext } from '../../../context/DataContext'
 
-interface TimeLineProps {
-  state?: Record<string, any>;
-}
-
-const Timeline = (props: TimeLineProps) => {
-  const data = props.state?.study || []
-  const length = data.length
+const Timeline = () => {
+  const { data } = useDataContext() as { data: any }
+  const study = data?.study || []
+  const length = study.length
   const initialDisplay = 12
   const perPage = 4
 
@@ -98,7 +96,7 @@ const Timeline = (props: TimeLineProps) => {
   const loadMoreElements = () => {
     setElements((oldElements: JSX.Element[]) => [
       ...oldElements,
-      ...data.slice(counter, counter + perPage).map((item: any, index: number) =>
+      ...study.slice(counter, counter + perPage).map((item: any, index: number) =>
         renderTimelineElement(item, index + counter)
       )
     ])
@@ -108,7 +106,7 @@ const Timeline = (props: TimeLineProps) => {
   const [counter, setCounter] = useState(initialDisplay)
 
   const [elements, setElements] = useState(
-    data.slice(0, initialDisplay).map((item: any, index: number) => {
+    study.slice(0, initialDisplay).map((item: any, index: number) => {
       return renderTimelineElement(item, index)
     })
   )

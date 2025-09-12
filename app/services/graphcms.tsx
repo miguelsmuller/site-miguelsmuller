@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import 'server-only'
 
 import fs from 'fs'
 
@@ -10,7 +10,8 @@ function loadHygraphConfig() {
 
   try {
     if (fs.existsSync('settings/graphcms.json')) {
-      hygraphConfig = require('settings/graphcms.json')
+      const file = fs.readFileSync('settings/graphcms.json', 'utf-8')
+      hygraphConfig = JSON.parse(file)
     }
   } catch (error: any) {
     console.error('Error while loading GraphCMS configuration:', error.message)

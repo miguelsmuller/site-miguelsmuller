@@ -1,17 +1,16 @@
+'use client'
+
 import React from 'react'
 import FooterFirst from './footer-first'
 import FooterSecond from './footer-second'
+import { useDataContext } from '../../context/DataContext'
 
-interface FooterProps {
-  state?: Record<string, any>;
-}
-
-export default function Footer(props: FooterProps) {
-  const data = props.state
+export default function Footer() {
+  const { data } = useDataContext() as { data: any }
   return (
     <footer>
-      <FooterFirst state={data} />
-      <FooterSecond state={data} />
+      <FooterFirst />
+      <FooterSecond />
     </footer>
   )
 }

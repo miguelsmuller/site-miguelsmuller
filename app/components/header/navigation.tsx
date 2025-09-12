@@ -1,14 +1,14 @@
+'use client'
+
 import React, { Fragment } from 'react'
 
 import styles from './header.module.scss'
 import Link from 'next/link'
+import { useDataContext } from '../../context/DataContext'
 
-interface NavigationProps {
-  state?: Record<string, any>;
-}
-
-export default function Navigation(props: NavigationProps) {
-  const pageHome = props?.state?.pageHomes?.[0] || {}
+export default function Navigation() {
+  const { data } = useDataContext() as { data: any }
+  const pageHome = data?.pageHomes?.[0] || {}
 
   const articles = 'https://articles.miguelsmuller.dev.br/'
   const github = pageHome?.personalUrlGithub || ''

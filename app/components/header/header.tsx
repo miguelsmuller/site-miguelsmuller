@@ -17,15 +17,14 @@ import Navigation from './navigation'
 import DarkModeButton from '../DarkMode/BtnDarkMode'
 import styles from './header.module.scss'
 import Link from 'next/link'
+import { useDataContext } from '../../context/DataContext'
 
-interface HeaderProps {
-  refElement?: React.RefObject<HTMLDivElement> | null;
-  state?: Record<string, any>;
-}
-
-export default function Header(props: HeaderProps) {
+export default function Header() {
   const [isHeaderVisible, setHeaderVisible] = useState(false)
   const [isNavigationVisible, setNavigationVisible] = useState(false)
+  const context = useDataContext() as { data?: any }
+  const pageHome = context?.data?.pageHomes?.[0] || {}
+  const coverTitle = pageHome?.coverTitle || ''
 
   enum ScrollDirection {
     UP = 'Up',
@@ -71,7 +70,7 @@ export default function Header(props: HeaderProps) {
   return (
     <header id="header__root" className={`${styles.header__root} ${isHeaderVisible ? styles.visible : ''}`}>
       <div className={`${styles.header__container} container`}>
-        <Link href="/">
+        <Link href="/" title={coverTitle}>
           <HeaderLogo />
         </Link>
 
@@ -83,7 +82,7 @@ export default function Header(props: HeaderProps) {
         </button>
 
         <div className={`${styles.header__wrap} ${isNavigationVisible ? styles.visible : ''}`}>
-          <Navigation state={props.state} />
+          <Navigation />
         </div>
         <DarkModeButton />
       </div>
