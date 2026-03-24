@@ -39,6 +39,29 @@ Antes de executar o projeto, é necessário configurar o arquivo `graphcms.json`
 
 Estas informações são essenciais para que o projeto possa se conectar ao Hygraph e gerenciar o conteúdo de maneira eficiente.
 
+### :arrows_clockwise: **Atualização de Conteúdo Sem Rebuild**
+
+O conteúdo da home usa cache com revalidação automática de **10 minutos** (ISR). Além disso, o projeto possui uma rota para revalidação imediata via webhook do Hygraph:
+
+- Endpoint: `POST /api/revalidate`
+- Header recomendado: `x-revalidate-secret: <seu_token>`
+- Alternativa: `Authorization: Bearer <seu_token>`
+- Env obrigatório: `REVALIDATE_SECRET=<seu_token>`
+
+#### Exemplo de chamada
+
+```bash
+curl -X POST "https://www.seudominio.com/api/revalidate" \
+  -H "x-revalidate-secret: SEU_TOKEN"
+```
+
+#### Configuração sugerida no Hygraph (Webhook)
+
+- URL: `https://www.seudominio.com/api/revalidate`
+- Método: `POST`
+- Header: `x-revalidate-secret` com o mesmo valor de `REVALIDATE_SECRET`
+- Evento: publicação de conteúdo usado na home (`pageHomes`, `portifolios`, `studies`, `testimonies`)
+
 <br/>
 
 ## 	:link: **Ambientes**
