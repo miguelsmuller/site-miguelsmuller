@@ -35,7 +35,11 @@ The project uses Hygraph as the main tool for content management. Hygraph is a p
 
 ### :arrow_forward: **Hygraph Configuration**
 
-Before running the project, it's necessary to configure the `graphcms.json` file in the settings folder according to the `graphcms.json.exp` template with information from your project on Hygraph.
+Before running the project, configure a root `.env` file with your Hygraph environment variables.
+There is a versioned template available at `.env.example`.
+
+- `HYGRAPH_URL`
+- `HYGRAPH_KEY`
 
 This information is essential for the project to connect to Hygraph and manage content efficiently.
 

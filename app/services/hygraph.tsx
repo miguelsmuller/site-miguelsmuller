@@ -1,34 +1,49 @@
 import 'server-only'
 
-import fs from 'fs'
 import { unstable_cache as unstableCache } from 'next/cache'
 
 export const HOME_CONTENT_CACHE_TAG = 'home-content'
 const HOME_CONTENT_REVALIDATE_SECONDS = 600
 
-function loadHygraphConfig() {
-  let hygraphConfig = {
+type HygraphConfig = {
+  url: string | null
+  key: string | null
+}
+
+function sanitizeValue(value: string | null | undefined): string | null {
+  if (!value) {
+    return null
+  }
+
+  const trimmed = value.trim().replace(/^['"]|['"]$/g, '')
+  return trimmed.length > 0 ? trimmed : null
+}
+
+function isValidHygraphConfig(config: HygraphConfig): boolean {
+  return Boolean(config.url && config.key)
+}
+
+function loadHygraphConfig(): HygraphConfig {
+  const envConfig = {
+    url: sanitizeValue(process.env.HYGRAPH_URL),
+    key: sanitizeValue(process.env.HYGRAPH_KEY)
+  }
+
+  if (isValidHygraphConfig(envConfig)) {
+    return envConfig
+  }
+
+  return {
     url: null,
     key: null
   }
-
-  try {
-    if (fs.existsSync('settings/graphcms.json')) {
-      const file = fs.readFileSync('settings/graphcms.json', 'utf-8')
-      hygraphConfig = JSON.parse(file)
-    }
-  } catch (error: any) {
-    console.error('Error while loading GraphCMS configuration:', error.message)
-  }
-
-  return hygraphConfig
 }
 
 async function callHygraphAPI(query: string): Promise<any> {
   const hygraphConfig = loadHygraphConfig()
 
   if (!hygraphConfig?.url || !hygraphConfig?.key) {
-    throw new Error('GraphCMS configuration is missing required fields.')
+    throw new Error('Hygraph configuration is missing required fields.')
   }
 
   const urlDefinitiva = hygraphConfig.url || ''
@@ -43,18 +58,18 @@ async function callHygraphAPI(query: string): Promise<any> {
   })
 
   if (!response.ok) {
-    throw new Error(`GraphCMS request failed with status ${response.status}`)
+    throw new Error(`Hygraph request failed with status ${response.status}`)
   }
 
   const json = await response.json()
 
   if (json?.errors?.length) {
-    const message = json.errors[0]?.message || 'Unknown GraphCMS error'
-    throw new Error(`GraphCMS returned errors: ${message}`)
+    const message = json.errors[0]?.message || 'Unknown Hygraph error'
+    throw new Error(`Hygraph returned errors: ${message}`)
   }
 
   if (!json?.data) {
-    throw new Error('GraphCMS response is missing data.')
+    throw new Error('Hygraph response is missing data.')
   }
 
   return json.data
@@ -128,7 +143,7 @@ async function loadAllContentForHome(): Promise<any> {
   `)
 
   if (!data?.pageHomes || !Array.isArray(data.pageHomes)) {
-    throw new Error('Invalid home content payload received from GraphCMS.')
+    throw new Error('Invalid home content payload received from Hygraph.')
   }
 
   return data

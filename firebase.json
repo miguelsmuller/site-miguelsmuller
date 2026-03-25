@@ -1,8 +1,5 @@
 {
   "emulators": {
-    "functions": {
-      "port": 5001
-    },
     "hosting": {
       "port": 5000
     },
@@ -19,28 +16,6 @@
     ],
     "frameworksBackend": {
       "region": "us-central1"
-    },
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "nextjsServer"
-      }
-    ]
-  },
-  "functions": {
-    "source": ".",
-    "runtime": "nodejs22",
-    "ignore": [
-      "firebase.json",
-      "firebase-debug.log",
-      "**/.*",
-      "**/node_modules/**",
-      "components/**",
-      "helpers/**",
-      "pages/**",
-      "public/**",
-      "firestore.rules",
-      "readme.md"
-    ]
+    }
   }
 }

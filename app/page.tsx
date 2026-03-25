@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 
 import { DataProvider } from './context/DataContext'
-import { getAllContentForHome } from './services/graphcms'
+import { getAllContentForHome } from './services/hygraph'
 
 const Header = dynamic(() => import('./components/header/header'), { ssr: false })
 const Overview = dynamic(() => import('./components/overview/overview'), { ssr: false })

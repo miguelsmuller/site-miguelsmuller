@@ -1,7 +1,7 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { HOME_CONTENT_CACHE_TAG } from '../../services/graphcms'
+import { HOME_CONTENT_CACHE_TAG } from '../../services/hygraph'
 
 const SECRET_HEADER = 'x-revalidate-secret'
 
