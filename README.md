@@ -35,7 +35,11 @@ O projeto utiliza o Hygraph como a ferramenta principal para o gerenciamento de 
 
 ### :arrow_forward: **Configuração do Hygraph**
 
-Antes de executar o projeto, é necessário configurar o arquivo `graphcms.json` na pasta settings conforme o modelo `graphcms.json.exp` com as informações do seu projeto no Hygraph.
+Antes de executar o projeto, é necessário configurar um arquivo `.env` na raiz com as variáveis do Hygraph.
+Existe um modelo versionado em `.env.example`.
+
+- `HYGRAPH_URL`
+- `HYGRAPH_KEY`
 
 Estas informações são essenciais para que o projeto possa se conectar ao Hygraph e gerenciar o conteúdo de maneira eficiente.
 
@@ -61,6 +65,17 @@ curl -X POST "https://www.seudominio.com/api/revalidate" \
 - Método: `POST`
 - Header: `x-revalidate-secret` com o mesmo valor de `REVALIDATE_SECRET`
 - Evento: publicação de conteúdo usado na home (`pageHomes`, `portifolios`, `studies`, `testimonies`)
+
+#### Variáveis de ambiente (Firebase webframeworks)
+
+Para o runtime SSR do Firebase encontrar o Hygraph sem depender de arquivo local, configure no backend:
+
+- `HYGRAPH_URL`
+- `HYGRAPH_KEY`
+
+Também configure:
+
+- `REVALIDATE_SECRET` (mesmo token enviado no webhook)
 
 <br/>
 
@@ -123,13 +138,9 @@ Execute o **Ambiente de Desenvolvimento** com o script NPM:
   - Você pode acompanhar o progresso dessa workflow [aqui](https://github.com/miguelsmuller/site-miguelsmuller/actions/workflows/firebase-hosting-channel.yml).
 
 
-### :fire: **Firebase Functions**
+### :fire: **Firebase Hosting + Web Frameworks**
 
-Este projeto utiliza o Firebase Functions para hospedagem, e o arquivo `server.js` na raiz do projeto é o ponto de entrada (entrypoint) para as funções do Firebase. O método principal, `nextjsServer`, é responsável por iniciar o servidor Next.js.
-
-### Configuração do Package.json
-
-Certifique-se de que o arquivo `package.json` está configurado corretamente, apontando para o arquivo `server.js` como o ponto de entrada principal das funções Firebase.
+Este projeto utiliza a integração oficial do Firebase Hosting com Next.js (`webframeworks`). O backend SSR é gerado automaticamente pelo Firebase durante o deploy do Hosting.
 
 <br/>
 

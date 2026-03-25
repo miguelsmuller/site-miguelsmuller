@@ -20,8 +20,12 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo '${{ secrets.HYGRAPH_API }}' > ./settings/graphcms.json
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > $HOME/gcloud.json
+          echo "HYGRAPH_URL=${{ secrets.HYGRAPH_URL }}" > .env
+          echo "HYGRAPH_KEY=${{ secrets.HYGRAPH_KEY }}" >> .env
+          if [ -n "${{ secrets.REVALIDATE_SECRET }}" ]; then
+            echo "REVALIDATE_SECRET=${{ secrets.REVALIDATE_SECRET }}" >> .env
+          fi
 
       - name: Install dependencies
         run: npm ci && npm run build
@@ -33,4 +37,4 @@ jobs:
         run: |
           firebase experiments:enable webframeworks
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json
-          npx firebase-tools deploy --only functions,hosting -m "Deploying ${{ github.sha }}" --force
+          npx firebase-tools deploy --only hosting -m "Deploying ${{ github.sha }}" --force
