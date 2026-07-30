@@ -1,21 +1,34 @@
-/* eslint-disable camelcase */
-
 import React from 'react'
-import { Open_Sans } from 'next/font/google'
+import type { Metadata } from 'next'
 import { Providers } from './provider/Provider'
 import './globals.css'
 
-const openSans = Open_Sans({
-  weight: ['300', '400', '500', '600', '700', '800'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-opensans'
-})
+export const metadata: Metadata = {
+  metadataBase: new URL('https://www.miguelsmuller.dev.br'),
+  title: {
+    default: 'Miguel Müller — Engenheiro de Software',
+    template: '%s — Miguel Müller'
+  },
+  description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.',
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'Miguel Müller',
+    title: 'Miguel Müller — Engenheiro de Software',
+    description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.',
+    images: ['/og.png']
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Miguel Müller — Engenheiro de Software',
+    description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.',
+    images: ['/og.png']
+  }
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-br" className={openSans.className}>
+    <html lang="pt-BR" suppressHydrationWarning>
       <body>
         <Providers>{children}</Providers>
       </body>

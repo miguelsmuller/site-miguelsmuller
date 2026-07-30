@@ -1,32 +1,37 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Metadata } from 'next'
-import dynamic from 'next/dynamic'
+import HomePage from './components/home-page'
+import { getHashnodeArticles } from './data/hashnode-articles'
+import { getHygraphHomeContent } from './data/hygraph-content'
+import { siteContent } from './data/site-content'
 
-import { DataProvider } from './context/DataContext'
-import { getAllContentForHome } from './services/hygraph'
-
-const Header = dynamic(() => import('./components/header/header'), { ssr: false })
-const Overview = dynamic(() => import('./components/overview/overview'), { ssr: false })
-const Study = dynamic(() => import('./components/study/study'), { ssr: false })
-const Portifolio = dynamic(() => import('./components/portifolio/portifolio'), { ssr: false })
-const Footer = dynamic(() => import('./components/footer/footer'), { ssr: false })
+// The homepage must run on the server for every request so its article list
+// reflects the current Hashnode RSS feed instead of the build-time snapshot.
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Miguel Müller'
+  title: 'Miguel Müller — Engenheiro de Software',
+  description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.'
 }
 
 export default async function Home() {
-  const data = await getAllContentForHome()
+  const [articles, hygraph] = await Promise.all([
+    getHashnodeArticles(),
+    getHygraphHomeContent()
+  ])
+
+  const profile = { ...siteContent.profile, ...(hygraph.resumeUrl ? { resumeUrl: hygraph.resumeUrl } : {}) }
+  const socialLinks = hygraph.resumeUrl
+    ? [...siteContent.socialLinks, { label: 'currículo', href: hygraph.resumeUrl, kind: 'resume' as const }]
+    : siteContent.socialLinks
 
   return (
-    <DataProvider initialData={data}>
-      <Fragment>
-        <Header />
-        <Overview />
-        <Study />
-        <Portifolio />
-        <Footer />
-      </Fragment>
-    </DataProvider>
+    <HomePage
+      content={{ ...siteContent, ...hygraph.content, articles, profile, socialLinks }}
+      remoteContentAvailable={{
+        education: hygraph.available,
+        projects: hygraph.available
+      }}
+    />
   )
 }

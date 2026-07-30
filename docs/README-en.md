@@ -1,4 +1,5 @@
-# **Website - Miguel Muller - Personal Website**
+# Miguel Müller — personal website
+
 ![Code quality](https://img.shields.io/scrutinizer/quality/g/miguelsmuller/site-pessoal/master?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/miguelsmuller/site-pessoal?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/miguelsmuller/site-pessoal?style=flat-square)
@@ -11,116 +12,158 @@
  </tr>
 </table>
 
-## :pushpin: **Introduction**
-
-In 2013, when I started developing as a freelancer, I created a personal agency and named it "Devim." I kept the name Devim to distance myself from my xxx because I couldn't give it the attention it deserved due to other professional commitments.
-
-This project is a revamped version of the website, now under my own name.
-
-The project was built using Next.JS, a React.js framework, and utilizes TypeScript.
+In 2010, when I began working as a freelance developer, I founded my personal agency, Devim. Today, retaining the Devim name no longer reflects my professional growth: my goal is no longer to run a personal agency or continue as a freelancer. I am now focused on steadily building my career in corporate environments. The homepage presents my profile, specialties, experience, education, articles, and projects through an editorial, responsive, and accessible interface.
 
 This project serves two purposes:
+
 1. To be the repository for my personal website.
 2. To act as an experimental lab.
 
-The project is not complete, and it never will be. Just like my vision of software, it meets the needs of now, but the needs of tomorrow may differ.
+The project is not complete, and it never will be. This reflects my view of software: it meets today's needs, while tomorrow may bring different ones.
 
-<br/>
+## Quick start
 
-## :file_cabinet: **Content Management**
+With Node.js 22 and npm installed, run:
 
-The project uses Hygraph as the main tool for content management. Hygraph is a powerful content management platform that offers a variety of features and functionalities to facilitate the creation, organization, and publication of content efficiently and intuitively.
+```bash
+npm ci
+npm run dev
+```
 
-**[Admin Content - Hygraph](https://app.hygraph.com/)**
+Open `http://localhost:3000`. The site works without local credentials; in that case, only the education and project sections show as unavailable. To load that content, create a `.env.local` file with `HYGRAPH_URL` and `HYGRAPH_KEY`, as described in [Content management](#content-management).
 
-### :arrow_forward: **Hygraph Configuration**
+## Overview
 
-Before running the project, configure a root `.env` file with your Hygraph environment variables.
-There is a versioned template available at `.env.example`.
+The project uses [Next.js](https://nextjs.org/), React, and TypeScript. It keeps content separate from presentation: stable data lives in the repository, while education, projects, résumé, and articles come from remote sources.
 
-- `HYGRAPH_URL`
-- `HYGRAPH_KEY`
+```mermaid
+flowchart LR
+  Local[site-content.ts\nprofile, experience and specialties] --> Page[app/page.tsx\nServer Component]
+  Hygraph[Hygraph\neducation, projects and résumé] --> Page
+  Hashnode[Hashnode RSS\narticles] --> Page
+  Page --> Home[HomePage\nClient Component]
+  Home --> UI[Navigation, theme, dialogs and lists]
+```
 
-This information is essential for the project to connect to Hygraph and manage content efficiently.
+`app/page.tsx` is dynamically rendered on every request. It fetches Hashnode and Hygraph concurrently on the server and passes normalized data to `HomePage`. The browser does not call those content sources directly.
 
-<br/>
+## Architecture and responsibilities
 
-##  :link: **Environments**
+| Area | Location | Responsibility |
+| --- | --- | --- |
+| Page and composition | `app/page.tsx` | Fetches remote data, merges it with local content, and defines page metadata. |
+| Local content | `app/data/site-content.ts` | Profile, links, specialties, and professional experience. |
+| Hygraph content | `app/data/hygraph-content.ts` | Queries and normalizes education, courses, certifications, projects, and the résumé URL. |
+| Articles | `app/data/hashnode-articles.ts` | Reads and normalizes the public Hashnode RSS feed. |
+| Interface | `app/components/home-page.tsx` and `app/components/home/` | Organizes sections, navigation, dialogs, theme, and responsive behavior. |
+| Styles | `app/components/home-page.module.css` and `app/globals.css` | Defines homepage visuals and global theme tokens. |
+| Discoverability | `app/layout.tsx`, `app/robots.ts`, and `app/sitemap.ts` | Provides metadata, Open Graph, Twitter Card, `robots.txt`, and `sitemap.xml`. |
 
-This project has two main environments: Production and Development.
+### Interface and accessibility
 
-- **Production:** The production environment is where the stable site is hosted. You can access it here:
+The homepage has a sidebar index on larger screens and a navigation drawer on mobile. The currently visible section is tracked with `IntersectionObserver`; `next-themes` manages the color theme and follows the system preference by default.
 
-<table>
- <tr>
-  <td><a href="https://www.miguelsmuller.dev.br">
-    <strong>Live: www.miguelsmuller.dev.br</strong>
-  </a></td>
- </tr>
-</table>
+The contact and project dialogs use portals, close with `Escape`, keep focus within the active interface, and restore focus to their trigger. A skip link takes keyboard users directly to the main content. Article, course, and project lists use progressive pagination while retaining a “show all” option.
 
-- **Development:** The development environment contains new features in testing. When commits occur in branches other than the main (master), a staging environment is generated automatically. Links to these staging environments are temporary and will only be available after the push to the parallel branch.
+## Visual Direction
 
-<br/>
+The homepage follows an editorial, text-first aesthetic inspired by raw HTML/browser-default design refined with intentional craft. It should feel like a professional web document: simple and direct, with product-level polish through spacing, typographic hierarchy, accessible navigation, and restrained interactions.
 
-## :computer: **Requirements and Installation**
-The requirements for running the project locally are simple.
+The interface avoids common modern landing-page patterns such as oversized heroes, decorative cards, gradients, strong shadows, and featured images for articles or projects. Visual refinement should come primarily from grid, typography, spacing, alignment, contrast, and interaction states.
 
-You need to have **[NodeJS](https://nodejs.org/)** and **[NPM](https://www.npmjs.com/)** installed on your computer or in a virtual machine.
+### Principles
 
-`$ node --version && npm --version`
+- Prioritize readability and scanability.
+- Keep the structure close to a technical index/document.
+- Use color only for semantic meaning or navigation.
+- Use small, functional icons without decorative excess.
+- Keep articles and projects free of featured images.
+- Use simple, accessible modals for contact and project details.
+- Preserve consistency between light and dark modes.
 
-_For reference, NodeJS v22 and NPM v9 were used in development._
+### Visual maintenance
 
-Install project **dependencies** with:
-`$ npm install`
+When changing the interface, avoid introducing SaaS-template patterns, decorative cards, strong shadows, gradients, or flashy animations.
 
-Run the **Development Environment** with the NPM script:
-`$ npm run dev`
+New sections should follow the same editorial rhythm as the current page: clear title, textual content, consistent spacing, and separation through visual breathing room. Main sections should not use `border-top`; horizontal separators should stay limited to the footer or occasional internal divisions.
 
-<br/>
+## Content management
 
-## :infinity: **Workflow**
-**[WORKFLOW.md](WORKFLOW.md)** - This project uses the workflow pattern called `git flow`.
-- [Atlassian - Comparing Workflows](https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow)
-- [Difference between workflows](https://www.zup.com.br/blog/git-workflow)
-- [Gitflow Cheatsheet](https://danielkummer.github.io/git-flow-cheatsheet/index.pt_BR.html)
+| Content | Source | How to update |
+| --- | --- | --- |
+| Profile, social links, specialties, and experience | `app/data/site-content.ts` | Edit the typed data in this file. |
+| Education, courses, certifications, projects, and résumé | Hygraph, `PUBLISHED` stage | Publish the change in Hygraph. The next request reflects it. |
+| Articles | `https://articles.miguelsmuller.dev.br/rss.xml` | Publish on Hashnode; the public feed is read on every request. |
 
-<br/>
+Hashnode does not require a token or environment variable. Hygraph requires the following variables:
 
-## :1st_place_medal: **Tests**
-[To be implemented]
+```bash
+# .env.local (not committed)
+HYGRAPH_URL=https://<your-endpoint>.hygraph.com/v2/<project>/master
+HYGRAPH_KEY=<read-token>
+```
 
-<br/>
+Never commit credentials. In GitHub Actions, `HYGRAPH_URL` and `HYGRAPH_KEY` must be configured as repository secrets.
 
-**[GITHUB ACTIONS](https://github.com/miguelsmuller/site-miguelsmuller/actions)** - This project utilizes two GitHub Actions workflows for deployment:
+If the RSS feed is unavailable, the article section displays a temporary-unavailability message. If Hygraph fails, only the education and project sections display that state; local content and the rest of the page remain available.
 
-- **Deploy to Live ([firebase-hosting-master.yml](./.github/workflows/firebase-hosting-master.yml)):** This workflow is automatically triggered on commits to the main branch (master) and is responsible for deploying the stable version of the site to the production environment.
-  - You can track the progress of this workflow [here](https://github.com/miguelsmuller/site-miguelsmuller/actions/workflows/firebase-hosting-master.yml).
+## Local configuration
 
-- **Deploy to Preview ([firebase-hosting-channel.yml](./.github/workflows/firebase-hosting-channel.yml)):** This workflow is automatically triggered on commits to branches other than the main (master) and is responsible for creating a preview environment to test new features. Links to these preview environments are generated randomly and temporarily.
-  - You can track the progress of this workflow [here](https://github.com/miguelsmuller/site-miguelsmuller/actions/workflows/firebase-hosting-channel.yml).
+- Node.js 22
+- npm
 
+The first-run procedure is in [Quick start](#quick-start). To develop with education and projects, configure Hygraph as described in [Content management](#content-management).
 
-### :fire: **Firebase Functions**
+To validate the production build locally:
 
-This project uses Firebase Functions for hosting, and the `server.js` file at the root of the project is the entry point for Firebase Functions. The main method, `nextjsServer`, is responsible for starting the Next.js server.
+```bash
+npm run build
+npm run start
+```
 
-### Package.json Configuration
+### Available scripts
 
-Certifique-se de que o arquivo `package.json` está configurado corretamente, apontando para o arquivo `server.js` como o ponto de entrada principal das funções Firebase.
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Starts Next.js in development mode. |
+| `npm run build` | Creates the production build in `nextjs/`. |
+| `npm run start` | Starts the production build. |
+| `npm run lint` | Runs the Next.js lint check. |
+| `npm run test:e2e` | Runs Playwright end-to-end tests and axe checks. |
+| `npm run serve` | Builds the project and starts the Firebase Hosting emulator. |
+| `npm run deploy` | Deploys to Firebase Hosting. |
 
-<br/>
+## Tests
 
-## :hammer_and_wrench: **Contributing**
-**[CONTRIBUTING.md](CONTRIBUTING.md)** - Specifications of how the contribution should be submitted
+End-to-end tests live in `tests/e2e/professional-site.spec.ts`. They run in Chromium and cover, among other things:
 
-<br/>
+- editorial structure and WCAG 2 A/AA rules with axe;
+- the contact dialog, focus behavior, and `Escape` handling;
+- education filters and progressive article/project lists;
+- the mobile navigation drawer and back-to-top link.
 
-## :memo: **Changelog**
-**[CHANGELOG.md](CHANGELOG.md)** - Chronologically list of changes for each version of a project
+Run them with:
 
-<br>
+```bash
+npm run test:e2e
+```
 
-## :framed_picture: **Screenshot**
-![Home](screenshot.jpeg "Title")
+Playwright starts `npm run dev` automatically when required. Local reports and results are ignored by Git.
+
+## Environments and deployment
+
+- **Production:** [www.miguelsmuller.dev.br](https://www.miguelsmuller.dev.br), deployed on pushes to the `master` branch.
+- **Preview:** each push to a branch other than `master` creates a temporary Firebase Hosting channel.
+
+The workflows live in `.github/workflows/`:
+
+- `firebase-hosting-master.yml` installs dependencies, builds, and deploys production;
+- `firebase-hosting-channel.yml` builds and deploys the preview after the build validation.
+
+Both use Node.js 22, Hygraph secrets, and Firebase Hosting's Web Frameworks integration to host Next.js SSR. Deploy activity is available in [GitHub Actions](https://github.com/miguelsmuller/site-miguelsmuller/actions).
+
+## Related documents
+
+- [Contribution guide](CONTRIBUTING.md)
+- [Git workflow](WORKFLOW.md)
+- [Changelog](CHANGELOG.md)
