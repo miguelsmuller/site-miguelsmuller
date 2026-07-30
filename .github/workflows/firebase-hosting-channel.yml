@@ -16,7 +16,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
       
       - name: Set environment variables
         env:
@@ -39,7 +39,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
 
       - name: Set environment variables
         env:
@@ -54,5 +54,5 @@ jobs:
 
       - name: Deploy to Preview
         run: |
-          npx firebase-tools experiments:enable webframeworks
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools hosting:channel:deploy "${{ github.sha }}"
+          npx firebase-tools@13.35.1 experiments:enable webframeworks
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools@13.35.1 hosting:channel:deploy "${{ github.sha }}"
