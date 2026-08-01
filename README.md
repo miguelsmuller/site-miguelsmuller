@@ -120,6 +120,12 @@ npm run build
 npm run start
 ```
 
+## Métricas e consentimento
+
+O site usa a propriedade GA4 `miguelmuller-site`, com o fluxo Web `Site pessoal – produção` para `https://www.miguelsmuller.dev.br`. O ID de medição público fica em `app/lib/analytics.ts`.
+
+No primeiro acesso, o visitante pode aceitar ou recusar o uso do Google Analytics. A escolha é salva somente no `localStorage` do navegador. A tag é inserida apenas após o aceite e somente em `www.miguelsmuller.dev.br`; ambientes locais e canais de preview não enviam dados à propriedade. O fluxo usa a Medição avançada padrão do GA4 para visualizações de página, rolagens, cliques de saída e demais eventos automáticos compatíveis.
+
 ### Scripts disponíveis
 
 | Comando | Finalidade |

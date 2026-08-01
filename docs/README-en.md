@@ -121,6 +121,12 @@ npm run build
 npm run start
 ```
 
+## Analytics and consent
+
+The site uses the `miguelmuller-site` GA4 property, with the `Site pessoal – produção` Web stream for `https://www.miguelsmuller.dev.br`. Its public measurement ID is stored in `app/lib/analytics.ts`.
+
+On a first visit, visitors can accept or refuse Google Analytics. The choice is saved only in the browser's `localStorage`. The tag is inserted only after acceptance and only on `www.miguelsmuller.dev.br`; local environments and preview channels do not send data to the property. The stream uses GA4's standard Enhanced measurement for page views, scrolls, outbound clicks, and other compatible automatic events.
+
 ### Available scripts
 
 | Command | Purpose |

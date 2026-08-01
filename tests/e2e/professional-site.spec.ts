@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import { isAnalyticsProductionHost } from '../../app/lib/analytics'
 
 test.describe('site profissional', () => {
   test.beforeEach(async ({ page }) => {
@@ -115,6 +116,44 @@ test.describe('site profissional', () => {
     const dialog = page.getByRole('dialog', { name: 'Pousada Müller' })
     await expect(dialog.getByText('Conclusão', { exact: true })).toBeVisible()
     await expect(dialog.getByRole('link', { name: 'repositório' })).toBeVisible()
+  })
+})
+
+test.describe('consentimento de Analytics', () => {
+  test('habilita a coleta somente no domínio de produção', () => {
+    expect(isAnalyticsProductionHost('www.miguelsmuller.dev.br')).toBe(true)
+    expect(isAnalyticsProductionHost('miguelsmuller.dev.br')).toBe(false)
+    expect(isAnalyticsProductionHost('localhost')).toBe(false)
+  })
+
+  test('solicita consentimento sem carregar a tag antes do aceite', async ({ page }) => {
+    await page.goto('/')
+
+    const banner = page.getByRole('region', { name: 'Uso de Analytics' })
+    await expect(banner).toBeVisible()
+    await expect(banner.getByRole('button', { name: 'aceitar Analytics' })).toBeVisible()
+    await expect(banner.getByRole('button', { name: 'recusar' })).toBeVisible()
+    await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0)
+    await expect(page.evaluate(() => typeof (window as typeof window & { gtag?: unknown }).gtag)).resolves.toBe('undefined')
+  })
+
+  test('persiste o aceite', async ({ page }) => {
+    await page.goto('/')
+    await page.getByRole('button', { name: 'aceitar Analytics' }).click()
+    await expect(page.getByRole('region', { name: 'Uso de Analytics' })).toBeHidden()
+
+    await page.reload()
+    await expect(page.getByRole('region', { name: 'Uso de Analytics' })).toBeHidden()
+  })
+
+  test('persiste a recusa e mantém a tag ausente', async ({ page }) => {
+    await page.goto('/')
+    await page.getByRole('button', { name: 'recusar' }).click()
+    await expect(page.getByRole('region', { name: 'Uso de Analytics' })).toBeHidden()
+
+    await page.reload()
+    await expect(page.getByRole('region', { name: 'Uso de Analytics' })).toBeHidden()
+    await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0)
   })
 })
 
