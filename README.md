@@ -126,6 +126,19 @@ O site usa a propriedade GA4 `miguelmuller-site`, com o fluxo Web `Site pessoal 
 
 No primeiro acesso, o visitante pode aceitar ou recusar o uso do Google Analytics. A escolha é salva somente no `localStorage` do navegador. A tag é inserida apenas após o aceite e somente em `www.miguelsmuller.dev.br`; ambientes locais e canais de preview não enviam dados à propriedade. O fluxo usa a Medição avançada padrão do GA4 para visualizações de página, rolagens, cliques de saída e demais eventos automáticos compatíveis.
 
+Além dos eventos automáticos, o site registra os eventos personalizados abaixo. Os parâmetros são técnicos e não contêm dados pessoais.
+
+| Evento | Quando ocorre | Parâmetros |
+| --- | --- | --- |
+| `section_view` | Uma seção passa a ser vista pela primeira vez na visita. | `section_name` |
+| `contact_open` | A pessoa abre o diálogo de contato. | `contact_source` |
+| `contact_link_click` | A pessoa seleciona um canal de contato ou currículo. | `contact_method`, `contact_source` |
+| `project_view` | A pessoa abre os detalhes de um projeto. | `project_slug` |
+| `project_link_click` | A pessoa segue um link dentro do diálogo do projeto. | `project_slug`, `project_link_label` |
+| `article_click` | A pessoa abre um artigo. | `article_category` |
+| `learning_filter` | A pessoa filtra cursos e certificações. | `learning_filter` |
+| `content_list_action` | A pessoa expande ou recolhe uma lista. | `content_section`, `content_action` |
+
 ### Scripts disponíveis
 
 | Comando | Finalidade |

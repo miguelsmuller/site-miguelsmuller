@@ -63,7 +63,8 @@ export function ProgressiveListActions({
   canCollapse,
   onLoadMore,
   onShowAll,
-  onCollapse
+  onCollapse,
+  onAction
 }: {
   listId: string
   loading: boolean
@@ -72,6 +73,7 @@ export function ProgressiveListActions({
   onLoadMore: () => void
   onShowAll: () => void
   onCollapse: () => void
+  onAction?: (action: 'load_more' | 'show_all' | 'collapse') => void
 }) {
   if (!hasMore && !canCollapse) return null
 
@@ -83,7 +85,10 @@ export function ProgressiveListActions({
             type="button"
             aria-controls={listId}
             disabled={loading}
-            onClick={onLoadMore}
+            onClick={() => {
+              onAction?.('load_more')
+              onLoadMore()
+            }}
           >
             {loading
               ? 'carregando…'
@@ -94,14 +99,20 @@ export function ProgressiveListActions({
             type="button"
             aria-controls={listId}
             disabled={loading}
-            onClick={onShowAll}
+            onClick={() => {
+              onAction?.('show_all')
+              onShowAll()
+            }}
           >
             ver todos
           </button>
         </>
       )}
       {canCollapse && (
-        <button type="button" aria-controls={listId} onClick={onCollapse}>
+        <button type="button" aria-controls={listId} onClick={() => {
+          onAction?.('collapse')
+          onCollapse()
+        }}>
           mostrar menos
         </button>
       )}

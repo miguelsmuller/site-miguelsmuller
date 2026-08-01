@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FiMenu } from 'react-icons/fi'
 import type { SiteContent } from '../data/site-content'
+import { trackAnalyticsEvent } from '../lib/analytics'
 import styles from './home-page.module.css'
 import { ContactDialog, ProjectDialog } from './home/dialogs'
 import { IndexContent, MobileDrawer, navigation } from './home/navigation'
@@ -24,6 +25,7 @@ export default function HomePage({
   const [activeSection, setActiveSection] = useState<SectionId>('apresentacao')
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [modal, setModal] = useState<ModalState>(null)
+  const viewedSections = useRef(new Set<SectionId>())
 
   useEffect(() => {
     const elements = navigation
@@ -35,7 +37,15 @@ export default function HomePage({
         .filter(entry => entry.isIntersecting)
         .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
 
-      if (visible[0]?.target.id) setActiveSection(visible[0].target.id as SectionId)
+      if (visible[0]?.target.id) {
+        const sectionId = visible[0].target.id as SectionId
+        setActiveSection(sectionId)
+
+        if (!viewedSections.current.has(sectionId)) {
+          viewedSections.current.add(sectionId)
+          trackAnalyticsEvent('section_view', { section_name: sectionId })
+        }
+      }
     }, { rootMargin: '-16% 0px -68% 0px', threshold: [0, 0.1] })
 
     elements.forEach(element => observer.observe(element))
@@ -44,6 +54,10 @@ export default function HomePage({
 
   const contactOpen = modal?.type === 'contact'
   const selectedProject = modal?.type === 'project' ? modal.project : null
+  const openContact = (source: 'hero' | 'footer') => {
+    trackAnalyticsEvent('contact_open', { contact_source: source })
+    setModal({ type: 'contact' })
+  }
 
   return (
     <>
@@ -68,7 +82,7 @@ export default function HomePage({
           </aside>
 
           <div className={styles.contentColumn}>
-            <HeroSection profile={content.profile} onContact={() => setModal({ type: 'contact' })} />
+            <HeroSection profile={content.profile} onContact={() => openContact('hero')} />
 
             <main id="conteudo">
               <SpecialtiesSection specialties={content.specialties} />
@@ -82,14 +96,17 @@ export default function HomePage({
               <ProjectsSection
                 projects={content.projects}
                 unavailable={!remoteContentAvailable.projects}
-                onSelectProject={project => setModal({ type: 'project', project })}
+                onSelectProject={project => {
+                  trackAnalyticsEvent('project_view', { project_slug: project.slug })
+                  setModal({ type: 'project', project })
+                }}
               />
             </main>
 
             <footer className={styles.footer}>
               <p>{content.profile.name} — {new Date().getFullYear()}.</p>
               <ul>
-                <li><button type="button" onClick={() => setModal({ type: 'contact' })}>contato</button></li>
+                <li><button type="button" onClick={() => openContact('footer')}>contato</button></li>
                 <li><a href="/sitemap.xml">sitemap</a></li>
                 <li><a href="#apresentacao">topo</a></li>
               </ul>

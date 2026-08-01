@@ -1,5 +1,6 @@
 import React from 'react'
 import type { SiteContent } from '../../../data/site-content'
+import { trackAnalyticsEvent } from '../../../lib/analytics'
 import styles from '../../home-page.module.css'
 import { ProgressiveListActions, useProgressiveList } from '../progressive-list'
 
@@ -29,6 +30,7 @@ export function ArticlesSection({ articles }: { articles: SiteContent['articles'
                             target="_blank"
                             rel="noreferrer"
                             aria-label={`${article.title} (abre em nova aba)`}
+                            onClick={() => trackAnalyticsEvent('article_click', { article_category: article.category })}
                           >
                             {article.title} <span className={styles.articleExternalLinkIcon} aria-hidden="true">↗</span>
                           </a>
@@ -51,6 +53,7 @@ export function ArticlesSection({ articles }: { articles: SiteContent['articles'
         onLoadMore={articlesList.loadMore}
         onShowAll={articlesList.showAll}
         onCollapse={articlesList.collapse}
+        onAction={action => trackAnalyticsEvent('content_list_action', { content_section: 'articles', content_action: action })}
       />
     </section>
   )

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FiFileText, FiMail } from 'react-icons/fi'
 import type { SiteContent } from '../../../data/site-content'
+import { trackAnalyticsEvent } from '../../../lib/analytics'
 import styles from '../../home-page.module.css'
 
 export function HeroSection({ profile, onContact }: { profile: SiteContent['profile'], onContact: () => void }) {
@@ -11,7 +12,14 @@ export function HeroSection({ profile, onContact }: { profile: SiteContent['prof
       <p className={styles.statement}>{profile.statement}</p>
       <ul className={styles.heroActions}>
         {profile.resumeUrl && <li>
-          <a href={profile.resumeUrl} target="_blank" rel="noreferrer"><FiFileText aria-hidden="true" />currículo</a>
+          <a
+            href={profile.resumeUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => trackAnalyticsEvent('contact_link_click', { contact_method: 'resume', contact_source: 'hero' })}
+          >
+            <FiFileText aria-hidden="true" />currículo
+          </a>
         </li>}
         <li>
           <button type="button" onClick={onContact}><FiMail aria-hidden="true" />contato</button>

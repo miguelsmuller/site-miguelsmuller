@@ -2,6 +2,7 @@ import { createPortal } from 'react-dom'
 import React, { useEffect, useRef } from 'react'
 import { FiX } from 'react-icons/fi'
 import type { Project, SiteContent } from '../../data/site-content'
+import { trackAnalyticsEvent } from '../../lib/analytics'
 import styles from '../home-page.module.css'
 import { createDialogTitleId, socialIcons } from './utils'
 
@@ -137,7 +138,12 @@ export function ContactDialog({ content, open, onClose }: { content: SiteContent
             <div key={link.kind} className={styles.contactRow}>
               <dt><Icon aria-hidden="true" />{link.label}</dt>
               <dd>
-                <a href={link.href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
+                <a
+                  href={link.href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noreferrer' : undefined}
+                  onClick={() => trackAnalyticsEvent('contact_link_click', { contact_method: link.kind, contact_source: 'dialog' })}
+                >
                   {value}
                 </a>
               </dd>
@@ -169,7 +175,14 @@ export function ProjectDialog({ project, open, onClose }: { project: Project, op
         <ul className={styles.modalLinks}>
           {project.links.map(link => (
             <li key={link.label}>
-              <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackAnalyticsEvent('project_link_click', { project_slug: project.slug, project_link_label: link.label })}
+              >
+                {link.label}
+              </a>
             </li>
           ))}
         </ul>
