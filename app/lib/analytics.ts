@@ -9,8 +9,22 @@ type AnalyticsParameters = Record<string, string | number | boolean>
 
 declare global {
   interface Window {
-    gtag?: (command: 'event', eventName: string, parameters: AnalyticsParameters) => void
+    dataLayer?: unknown[][]
+    gtag?: (...arguments_: unknown[]) => void
   }
+}
+
+export function initializeGoogleAnalytics() {
+  if (typeof window === 'undefined' || !isAnalyticsProductionHost(window.location.hostname)) return false
+
+  window.dataLayer = window.dataLayer || []
+  window.gtag = window.gtag || function (...arguments_) {
+    window.dataLayer?.push(arguments_)
+  }
+  window.gtag('js', new Date())
+  window.gtag('config', GA_MEASUREMENT_ID)
+
+  return true
 }
 
 export function trackAnalyticsEvent(eventName: string, parameters: AnalyticsParameters) {

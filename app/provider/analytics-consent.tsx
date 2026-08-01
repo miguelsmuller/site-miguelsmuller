@@ -1,8 +1,8 @@
 'use client'
 
 import Script from 'next/script'
-import React, { useEffect, useState } from 'react'
-import { GA_MEASUREMENT_ID, isAnalyticsProductionHost } from '../lib/analytics'
+import React, { useEffect, useRef, useState } from 'react'
+import { GA_MEASUREMENT_ID, initializeGoogleAnalytics } from '../lib/analytics'
 import styles from './analytics-consent.module.css'
 
 const consentStorageKey = 'analytics-consent'
@@ -11,6 +11,8 @@ type Consent = 'accepted' | 'rejected' | null
 
 export function AnalyticsConsent() {
   const [consent, setConsent] = useState<Consent | undefined>(undefined)
+  const [shouldLoadAnalytics, setShouldLoadAnalytics] = useState(false)
+  const analyticsInitialized = useRef(false)
 
   useEffect(() => {
     const storedConsent = window.localStorage.getItem(consentStorageKey)
@@ -22,22 +24,17 @@ export function AnalyticsConsent() {
     setConsent(value)
   }
 
-  const shouldLoadAnalytics = consent === 'accepted' &&
-    typeof window !== 'undefined' &&
-    isAnalyticsProductionHost(window.location.hostname)
+  useEffect(() => {
+    if (consent !== 'accepted' || analyticsInitialized.current) return
+
+    analyticsInitialized.current = initializeGoogleAnalytics()
+    setShouldLoadAnalytics(analyticsInitialized.current)
+  }, [consent])
 
   return (
     <>
       {shouldLoadAnalytics && (
-        <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GA_MEASUREMENT_ID}');`}
-          </Script>
-        </>
+        <Script id="google-analytics" src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
       )}
 
       {consent === null && (
