@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FiAward, FiBookOpen } from 'react-icons/fi'
 import type { SiteContent } from '../../../data/site-content'
+import { trackAnalyticsEvent } from '../../../lib/analytics'
 import styles from '../../home-page.module.css'
 import { ProgressiveListActions, useProgressiveList } from '../progressive-list'
 import type { LearningFilter } from '../types'
@@ -18,6 +19,7 @@ export function EducationSection({
   const changeLearningFilter = (filter: LearningFilter) => {
     learningList.reset()
     setLearningFilter(filter)
+    trackAnalyticsEvent('learning_filter', { learning_filter: filter })
   }
 
   return (
@@ -105,6 +107,7 @@ export function EducationSection({
           onLoadMore={learningList.loadMore}
           onShowAll={learningList.showAll}
           onCollapse={learningList.collapse}
+          onAction={action => trackAnalyticsEvent('content_list_action', { content_section: 'learning', content_action: action })}
         />
       </section>}
     </section>

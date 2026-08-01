@@ -121,6 +121,25 @@ npm run build
 npm run start
 ```
 
+## Analytics and consent
+
+The site uses the `miguelmuller-site` GA4 property, with the `Site pessoal – produção` Web stream for `https://www.miguelsmuller.dev.br`. Its public measurement ID is stored in `app/lib/analytics.ts`.
+
+On a first visit, visitors can accept or refuse Google Analytics. The choice is saved only in the browser's `localStorage`. The tag is inserted only after acceptance and only on `www.miguelsmuller.dev.br`; local environments and preview channels do not send data to the property. The stream uses GA4's standard Enhanced measurement for page views, scrolls, outbound clicks, and other compatible automatic events.
+
+In addition to automatic events, the site records the custom events below. Their parameters are technical and do not contain personal data.
+
+| Event | When it occurs | Parameters |
+| --- | --- | --- |
+| `section_view` | A section is first viewed during a visit. | `section_name` |
+| `contact_open` | A visitor opens the contact dialog. | `contact_source` |
+| `contact_link_click` | A visitor selects a contact channel or the résumé. | `contact_method`, `contact_source` |
+| `project_view` | A visitor opens a project detail. | `project_slug` |
+| `project_link_click` | A visitor follows a link in the project dialog. | `project_slug`, `project_link_label` |
+| `article_click` | A visitor opens an article. | `article_category` |
+| `learning_filter` | A visitor filters courses and certifications. | `learning_filter` |
+| `content_list_action` | A visitor expands or collapses a list. | `content_section`, `content_action` |
+
 ### Available scripts
 
 | Command | Purpose |

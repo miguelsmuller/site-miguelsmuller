@@ -14,6 +14,7 @@ import {
 } from 'react-icons/fi'
 import type { IconType } from 'react-icons'
 import type { SiteContent, SocialLink } from '../../data/site-content'
+import { trackAnalyticsEvent } from '../../lib/analytics'
 import styles from '../home-page.module.css'
 import { useFocusBoundary } from './dialogs'
 import type { SectionId } from './types'
@@ -66,6 +67,7 @@ function SocialLinks({ links }: { links: SocialLink[] }) {
               href={link.href}
               target={external ? '_blank' : undefined}
               rel={external ? 'noreferrer' : undefined}
+              onClick={() => trackAnalyticsEvent('contact_link_click', { contact_method: link.kind, contact_source: 'navigation' })}
             >
               <span>{link.label}</span>
               <Icon aria-hidden="true" />

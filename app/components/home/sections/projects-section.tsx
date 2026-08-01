@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Project, SiteContent } from '../../../data/site-content'
+import { trackAnalyticsEvent } from '../../../lib/analytics'
 import styles from '../../home-page.module.css'
 import { ProgressiveListActions, useProgressiveList } from '../progressive-list'
 
@@ -47,6 +48,7 @@ export function ProjectsSection({
         onLoadMore={projectsList.loadMore}
         onShowAll={projectsList.showAll}
         onCollapse={projectsList.collapse}
+        onAction={action => trackAnalyticsEvent('content_list_action', { content_section: 'projects', content_action: action })}
       />}
     </section>
   )
