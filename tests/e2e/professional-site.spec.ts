@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
-import { GA_MEASUREMENT_ID, initializeGoogleAnalytics, isAnalyticsProductionHost, trackAnalyticsEvent } from '../../app/lib/analytics'
+import { GA_MEASUREMENT_ID, getGoogleAnalyticsInitializationScript, isAnalyticsProductionHost, trackAnalyticsEvent } from '../../app/lib/analytics'
 
 test.describe('site profissional', () => {
   test.beforeEach(async ({ page }) => {
@@ -129,14 +129,12 @@ test.describe('consentimento de Analytics', () => {
   test('envia eventos personalizados apenas em produção', () => {
     const events: unknown[][] = []
     const originalWindow = globalThis.window
-    const fakeWindow = { location: { hostname: 'www.miguelsmuller.dev.br' } } as Pick<Window, 'dataLayer' | 'gtag' | 'location'>
+    const fakeWindow = { location: { hostname: 'www.miguelsmuller.dev.br' } } as Pick<Window, 'gtag' | 'location'>
 
     Object.defineProperty(globalThis, 'window', { value: fakeWindow, configurable: true })
 
     try {
-      expect(initializeGoogleAnalytics()).toBe(true)
-      expect(Array.from(fakeWindow.dataLayer![0])).toEqual(['js', expect.any(Date)])
-      expect(Array.from(fakeWindow.dataLayer![1])).toEqual(['config', GA_MEASUREMENT_ID])
+      expect(getGoogleAnalyticsInitializationScript()).toContain(`gtag('config', '${GA_MEASUREMENT_ID}')`)
 
       fakeWindow.gtag = (...arguments_: unknown[]) => events.push(arguments_)
       trackAnalyticsEvent('project_view', { project_slug: 'site-pessoal' })
