@@ -2,7 +2,7 @@
 
 import Script from 'next/script'
 import React, { useEffect, useRef, useState } from 'react'
-import { GA_MEASUREMENT_ID, initializeGoogleAnalytics } from '../lib/analytics'
+import { GA_MEASUREMENT_ID, initializeGoogleAnalytics, prepareGoogleAnalytics } from '../lib/analytics'
 import styles from './analytics-consent.module.css'
 
 const consentStorageKey = 'analytics-consent'
@@ -25,16 +25,27 @@ export function AnalyticsConsent() {
   }
 
   useEffect(() => {
-    if (consent !== 'accepted' || analyticsInitialized.current) return
+    if (consent !== 'accepted' || shouldLoadAnalytics) return
+
+    setShouldLoadAnalytics(prepareGoogleAnalytics())
+  }, [consent, shouldLoadAnalytics])
+
+  const startGoogleAnalytics = () => {
+    if (analyticsInitialized.current) return
 
     analyticsInitialized.current = initializeGoogleAnalytics()
-    setShouldLoadAnalytics(analyticsInitialized.current)
-  }, [consent])
+  }
 
   return (
     <>
       {shouldLoadAnalytics && (
-        <Script id="google-analytics" src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
+        <Script
+          id="google-analytics"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+          onLoad={startGoogleAnalytics}
+          onReady={startGoogleAnalytics}
+        />
       )}
 
       {consent === null && (

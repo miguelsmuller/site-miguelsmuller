@@ -46,6 +46,32 @@ flowchart LR
 
 `app/page.tsx` é renderizado dinamicamente a cada requisição. Ele busca Hashnode e Hygraph no servidor em paralelo e passa os dados normalizados para `HomePage`. O navegador não chama essas fontes de conteúdo diretamente.
 
+### Infraestrutura de entrega
+
+O deploy usa uma arquitetura híbrida entre Firebase, Google Cloud e Cloudflare. O Firebase CLI e o Firebase Hosting com Web Frameworks são a porta de deploy e de previews, mas o SSR do Next.js é atendido por um serviço gerenciado no Cloud Run.
+
+Os domínios `miguelsmuller.dev.br` e `www.miguelsmuller.dev.br` possuem mapeamentos no Cloud Run para esse mesmo serviço. A Cloudflare é a zona DNS autoritativa e aplica o redirecionamento permanente do domínio raiz para `www`. Portanto, no acesso normal, a requisição para o domínio sem `www` é redirecionada na Cloudflare antes de chegar ao Cloud Run.
+
+### Configuração de produção
+
+| Camada | Configuração atual | Papel no acesso público |
+| --- | --- | --- |
+| Firebase | Projeto `miguelmuller-site`; `firebase.json` usa `frameworksBackend`. | Recebe os deploys e previews pela integração Web Frameworks. |
+| Cloud Run | Serviço gerenciado para o site. | Executa o SSR e entrega a aplicação Next.js. |
+| Domínios no Google Cloud | `miguelsmuller.dev.br` e `www.miguelsmuller.dev.br` mapeados para o mesmo serviço. | Permite que os dois hosts cheguem ao mesmo serviço. |
+| Cloudflare | DNS autoritativo; raiz proxyada; regra `301` de `miguelsmuller.dev.br` para `www.miguelsmuller.dev.br`. | Define o host canônico e preserva caminho e query no redirecionamento. |
+
+```mermaid
+flowchart LR
+  Visitor[Visitante] --> CF[Cloudflare\nDNS e redirecionamento]
+  CF -->|miguelsmuller.dev.br\n301 para www| WWW[www.miguelsmuller.dev.br]
+  CF -->|www| Run[Cloud Run\nSSR do Next.js]
+  Firebase[Firebase CLI e Hosting\nWeb Frameworks] -->|deploy e previews| Run
+  Run --> App[Next.js SSR]
+  App --> Browser[Aplicação no navegador]
+  Browser -->|após consentimento| GA[Google Analytics 4]
+```
+
 ## Arquitetura e responsabilidades
 
 | Área | Local | Responsabilidade |
@@ -122,9 +148,23 @@ npm run start
 
 ## Métricas e consentimento
 
-O site usa a propriedade GA4 `miguelmuller-site`, com o fluxo Web `Site pessoal – produção` para `https://www.miguelsmuller.dev.br`. O ID de medição público fica em `app/lib/analytics.ts`.
+O site usa a conta GA4 `Pessoal` (`xxxxx900`) e a propriedade `miguelmuller-site` (`xxxxxx730`). O fluxo Web `Site pessoal – produção` tem URL padrão `https://www.miguelsmuller.dev.br`; seu ID de medição público está declarado em `app/lib/analytics.ts`.
 
-No primeiro acesso, o visitante pode aceitar ou recusar o uso do Google Analytics. A escolha é salva somente no `localStorage` do navegador. A tag é inserida apenas após o aceite e somente em `www.miguelsmuller.dev.br`; ambientes locais e canais de preview não enviam dados à propriedade. O fluxo usa a Medição avançada padrão do GA4 para visualizações de página, rolagens, cliques de saída e demais eventos automáticos compatíveis.
+O código usa o ID de medição (`G-…`), não o ID numérico da propriedade. O GA4 mantém o vínculo entre esse ID, o fluxo e a propriedade `xxxxxx730`.
+
+No primeiro acesso, o visitante pode aceitar ou recusar o uso do Google Analytics. A escolha é salva somente no `localStorage` do navegador. A tag é inserida apenas após o aceite e somente em `www.miguelsmuller.dev.br`; ambientes locais e canais de preview não enviam dados à propriedade. O domínio sem `www` é redirecionado permanentemente pela Cloudflare antes de a aplicação carregar, por isso também chega ao endereço canônico e à mesma medição. O fluxo usa a Medição avançada padrão do GA4 para visualizações de página, rolagens, cliques de saída e demais eventos automáticos compatíveis.
+
+O GA4 é executado no navegador. Firebase Hosting, Cloud Run e os mapeamentos de domínio não enviam eventos de Analytics por conta própria; eles influenciam a coleta apenas ao entregar a aplicação e ao garantir que o visitante chegue ao host canônico `www`.
+
+O caminho de dados é: visitante aceita o banner → o navegador inicializa `gtag.js` → o navegador envia eventos diretamente ao GA4. Nenhum evento passa pelo Firebase, Cloud Run ou Cloudflare depois que a página foi entregue.
+
+### Validação após deploy
+
+1. Em uma janela anônima, acesse `https://miguelsmuller.dev.br` e confirme o redirecionamento para `https://www.miguelsmuller.dev.br`.
+2. Aceite o banner de Analytics e navegue pelo site.
+3. Consulte o relatório em tempo real da propriedade `xxxxxx730` imediatamente. Ele mostra apenas os últimos 30 minutos.
+4. Consulte os relatórios padrão mais tarde: os dados processados podem levar algumas horas para aparecer.
+5. Em outra janela anônima, recuse o banner e confirme que não há carregamento de `gtag.js` nem requisições de Analytics.
 
 Além dos eventos automáticos, o site registra os eventos personalizados abaixo. Os parâmetros são técnicos e não contêm dados pessoais.
 
@@ -178,7 +218,7 @@ As workflows estão em `.github/workflows/`:
 - `firebase-hosting-master.yml` instala as dependências, gera o build e publica a produção;
 - `firebase-hosting-channel.yml` gera e publica o preview após a validação do build.
 
-Ambas usam Node.js 22, secrets do Hygraph e a integração Firebase Hosting com Web Frameworks para hospedar o SSR do Next.js. O acompanhamento dos deploys está disponível em [GitHub Actions](https://github.com/miguelsmuller/site-miguelsmuller/actions).
+Ambas usam Node.js 20, secrets do Hygraph e Firebase Hosting com Web Frameworks. Essa integração publica o SSR do Next.js no Cloud Run; ela não transforma a infraestrutura em Firebase Hosting puro. Os mapeamentos de domínio personalizados são mantidos no Cloud Run, enquanto a Cloudflare mantém o DNS e o redirecionamento canônico. O acompanhamento dos deploys está disponível em [GitHub Actions](https://github.com/miguelsmuller/site-miguelsmuller/actions).
 
 ## Documentos relacionados
 
