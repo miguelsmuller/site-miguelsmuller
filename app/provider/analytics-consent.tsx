@@ -1,8 +1,8 @@
 'use client'
 
 import Script from 'next/script'
-import React, { useEffect, useRef, useState } from 'react'
-import { GA_MEASUREMENT_ID, initializeGoogleAnalytics, prepareGoogleAnalytics } from '../lib/analytics'
+import React, { useEffect, useState } from 'react'
+import { GA_MEASUREMENT_ID, getGoogleAnalyticsInitializationScript, isAnalyticsProductionHost } from '../lib/analytics'
 import styles from './analytics-consent.module.css'
 
 const consentStorageKey = 'analytics-consent'
@@ -11,8 +11,6 @@ type Consent = 'accepted' | 'rejected' | null
 
 export function AnalyticsConsent() {
   const [consent, setConsent] = useState<Consent | undefined>(undefined)
-  const [shouldLoadAnalytics, setShouldLoadAnalytics] = useState(false)
-  const analyticsInitialized = useRef(false)
 
   useEffect(() => {
     const storedConsent = window.localStorage.getItem(consentStorageKey)
@@ -24,28 +22,19 @@ export function AnalyticsConsent() {
     setConsent(value)
   }
 
-  useEffect(() => {
-    if (consent !== 'accepted' || shouldLoadAnalytics) return
-
-    setShouldLoadAnalytics(prepareGoogleAnalytics())
-  }, [consent, shouldLoadAnalytics])
-
-  const startGoogleAnalytics = () => {
-    if (analyticsInitialized.current) return
-
-    analyticsInitialized.current = initializeGoogleAnalytics()
-  }
+  const shouldLoadAnalytics = consent === 'accepted' &&
+    typeof window !== 'undefined' &&
+    isAnalyticsProductionHost(window.location.hostname)
 
   return (
     <>
       {shouldLoadAnalytics && (
-        <Script
-          id="google-analytics"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-          onLoad={startGoogleAnalytics}
-          onReady={startGoogleAnalytics}
-        />
+        <>
+          <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {getGoogleAnalyticsInitializationScript()}
+          </Script>
+        </>
       )}
 
       {consent === null && (

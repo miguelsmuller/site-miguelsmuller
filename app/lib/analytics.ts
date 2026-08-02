@@ -14,27 +14,11 @@ declare global {
   }
 }
 
-export function prepareGoogleAnalytics() {
-  if (typeof window === 'undefined' || !isAnalyticsProductionHost(window.location.hostname)) return false
-
-  window.dataLayer = window.dataLayer || []
-  window.gtag = window.gtag || function (...arguments_) {
-    window.dataLayer?.push(arguments_)
-  }
-
-  return true
-}
-
-export function initializeGoogleAnalytics() {
-  if (!prepareGoogleAnalytics()) return false
-
-  const gtag = window.gtag
-  if (!gtag) return false
-
-  gtag('js', new Date())
-  gtag('config', GA_MEASUREMENT_ID)
-
-  return true
+export function getGoogleAnalyticsInitializationScript() {
+  return `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}');`
 }
 
 export function trackAnalyticsEvent(eventName: string, parameters: AnalyticsParameters) {
