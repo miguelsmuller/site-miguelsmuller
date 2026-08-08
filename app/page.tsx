@@ -10,7 +10,7 @@ import { siteContent } from './data/site-content'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Miguel Müller — Engenheiro de Software',
+  title: 'Miguel Müller — Software Engineer',
   description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.'
 }
 

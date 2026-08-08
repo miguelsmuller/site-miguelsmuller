@@ -6,7 +6,7 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.miguelsmuller.dev.br'),
   title: {
-    default: 'Miguel Müller — Engenheiro de Software',
+    default: 'Miguel Müller — Software Engineer',
     template: '%s — Miguel Müller'
   },
   description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.',
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     siteName: 'Miguel Müller',
-    title: 'Miguel Müller — Engenheiro de Software',
+    title: 'Miguel Müller — Software Engineer',
     description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.',
     images: ['/og.png']
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Miguel Müller — Engenheiro de Software',
+    title: 'Miguel Müller — Software Engineer',
     description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.',
     images: ['/og.png']
   }
