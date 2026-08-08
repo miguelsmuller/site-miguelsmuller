@@ -77,7 +77,7 @@ export type SiteContent = {
   projects: Project[]
 }
 
-type LocalSiteContent = Omit<SiteContent, 'academics' | 'learning' | 'articles' | 'projects'>
+type LocalSiteContent = Omit<SiteContent, 'socialLinks' | 'academics' | 'learning' | 'articles' | 'projects'>
 
 export const siteContent: LocalSiteContent = {
   profile: {
@@ -87,11 +87,6 @@ export const siteContent: LocalSiteContent = {
     location: 'Brasil',
     availability: 'Remoto'
   },
-  socialLinks: [
-    { label: 'github', href: 'https://github.com/miguelsmuller', kind: 'github' },
-    { label: 'linkedin', href: 'https://www.linkedin.com/in/miguelsmuller/', kind: 'linkedin' },
-    { label: 'email', href: 'mailto:falecom@muller.dev.br', kind: 'email' }
-  ],
   specialties: [
     { label: 'Backend e APIs', items: ['Java, Kotlin e Python', 'Mensageria e eventos', 'APIs, microsserviços e integrações', 'Modelagem de dados'] },
     { label: 'Frontend e Experiência Web', items: ['React e Angular', 'Interfaces responsivas', 'Performance e acessibilidade', 'Experiência do usuário'] },
@@ -105,7 +100,7 @@ export const siteContent: LocalSiteContent = {
       period: 'Jun/2026 - atual',
       location: 'Remoto',
       summary: 'Atuação em sistemas críticos de conciliação financeira para pagamentos, liquidações e repasses. Evolução de serviços com foco em consistência, rastreabilidade, auditoria e confiabilidade operacional.',
-      stack: ['Kotlin', 'Python', 'Kafka', 'AWS', 'Observabilidade'],
+      stack: ['Java', 'Kotlin', 'Spring', 'Kafka', 'Kubernetes', 'PostgreSQL', 'MongoDB', 'AWS', 'Observabilidade'],
       logo: '/icons/experience/picpay_logo.jpeg',
       marker: 'PP'
     },
@@ -115,7 +110,7 @@ export const siteContent: LocalSiteContent = {
       period: 'Fev/2024 - Jun/2026',
       location: 'Remoto',
       summary: 'Atuação backend em produtos de finance, pricing, integrações B2B e aquisição. Evoluí microsserviços e sistemas legados, com melhorias em rastreabilidade, automação, performance e integrações estratégicas.',
-      stack: ['Kotlin', 'Python', 'Kubernetes', 'AWS', 'PostgreSQL'],
+      stack: ['Kotlin', 'Micronaut', 'Python', 'FastAPI', 'Django', 'Kubernetes', 'AWS', 'PostgreSQL'],
       logo: '/icons/experience/loggi_logo.jpeg',
       marker: 'LG'
     },

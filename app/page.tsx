@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   description: 'Perfil profissional, experiência, formação, artigos e projetos de Miguel Müller.'
 }
 
+function toMailto(value: string) {
+  return value.startsWith('mailto:') ? value : `mailto:${value}`
+}
+
 export default async function Home() {
   const [articles, hygraph] = await Promise.all([
     getHashnodeArticles(),
@@ -21,9 +25,20 @@ export default async function Home() {
   ])
 
   const profile = { ...siteContent.profile, ...(hygraph.resumeUrl ? { resumeUrl: hygraph.resumeUrl } : {}) }
-  const socialLinks = hygraph.resumeUrl
-    ? [...siteContent.socialLinks, { label: 'currículo', href: hygraph.resumeUrl, kind: 'resume' as const }]
-    : siteContent.socialLinks
+  const socialLinks = [
+    ...(hygraph.contact.githubUrl
+      ? [{ label: 'github', href: hygraph.contact.githubUrl, kind: 'github' as const }]
+      : []),
+    ...(hygraph.contact.linkedinUrl
+      ? [{ label: 'linkedin', href: hygraph.contact.linkedinUrl, kind: 'linkedin' as const }]
+      : []),
+    ...(hygraph.contact.email
+      ? [{ label: 'email', href: toMailto(hygraph.contact.email), kind: 'email' as const }]
+      : []),
+    ...(hygraph.resumeUrl
+      ? [{ label: 'currículo', href: hygraph.resumeUrl, kind: 'resume' as const }]
+      : [])
+  ]
 
   return (
     <HomePage

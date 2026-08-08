@@ -20,6 +20,9 @@ const hygraphQuery = `
       studyType
     }
     pageHomes(stage: PUBLISHED, first: 1, orderBy: updatedAt_DESC) {
+      personalUrlGithub
+      personalUrlLinkedin
+      personalEmail
       personalUrlCurriculo {
         url
       }
@@ -73,6 +76,9 @@ type HygraphProject = {
 }
 
 type HygraphPageHome = {
+  personalUrlGithub?: string | null
+  personalUrlLinkedin?: string | null
+  personalEmail?: string | null
   personalUrlCurriculo?: {
     url?: string | null
   } | null
@@ -93,9 +99,15 @@ export type HygraphHomeContent = {
   projects: Project[]
 }
 
+export type HygraphContact = {
+  githubUrl?: string
+  linkedinUrl?: string
+  email?: string
+}
+
 export type HygraphHomeContentResult =
-  | { available: true, content: HygraphHomeContent, resumeUrl?: string }
-  | { available: false, content: HygraphHomeContent, resumeUrl?: undefined }
+  | { available: true, content: HygraphHomeContent, resumeUrl?: string, contact: HygraphContact }
+  | { available: false, content: HygraphHomeContent, resumeUrl?: undefined, contact: HygraphContact }
 
 const unavailableContent: HygraphHomeContent = {
   academics: [],
@@ -286,10 +298,15 @@ export async function getHygraphHomeContent(): Promise<HygraphHomeContentResult>
     return {
       available: true,
       content: toHomeContent(payload.data),
-      resumeUrl: normalizeText(payload.data?.pageHomes?.[0]?.personalUrlCurriculo?.url)
+      resumeUrl: normalizeText(payload.data?.pageHomes?.[0]?.personalUrlCurriculo?.url),
+      contact: {
+        githubUrl: normalizeText(payload.data?.pageHomes?.[0]?.personalUrlGithub),
+        linkedinUrl: normalizeText(payload.data?.pageHomes?.[0]?.personalUrlLinkedin),
+        email: normalizeText(payload.data?.pageHomes?.[0]?.personalEmail)
+      }
     }
   } catch (error) {
     console.error('Unable to load Hygraph home content.', error)
-    return { available: false, content: unavailableContent }
+    return { available: false, content: unavailableContent, contact: {} }
   }
 }
